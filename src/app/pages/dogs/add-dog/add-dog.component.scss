@@ -1,0 +1,130 @@
+
+.container{
+    background-color: #D9D9D9;
+    overflow-y: auto;
+    border-radius: 15px;
+}
+
+#profile_container{
+    
+    img{
+        width: 100%;
+        max-width: 300px;
+        aspect-ratio: 1/1;
+        object-fit: cover;
+        border-radius: 100%;
+        position: relative;
+
+    }
+}
+
+
+#vaccines{
+    border-radius: 15px;
+
+    #vaccine_header{
+        border-radius: 15px 15px 0px 0px;
+        padding: 2%;
+
+        #vaccine_title{
+            font-size: 150%;
+        }
+
+        #vaccines_description {
+            margin-top: -0.5vh;
+            font-size: 100%;
+            color: gray;
+            font-style: italic;
+        }
+    }
+
+    #vaccine_photos{
+        border-radius: 0px 0px 15px 15px;
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
+        .photo_container{
+            margin: 2%;
+            min-width: 238px;
+            width: 35%;
+            max-width: 322px;
+            height: 35vh;
+            display: flex;
+            img{
+                width: 100%;
+                flex-grow: 1;
+                border-radius: 15px;
+            }
+        }
+    }
+    #vaccine_photos::-webkit-scrollbar{
+        height: 5px;
+    }
+
+
+    #vaccine_photos::-webkit-scrollbar-thumb{
+        background-color: #a3a09ea4;
+        border-radius: 25px;
+    }
+    
+    
+}
+
+
+#photos{
+    border-radius: 15px;
+    margin-bottom: 5vh;
+
+    #photos_header{
+        padding: 2%;
+        border-radius: 15px 15px 0px 0px;
+
+        #photos_title{
+            font-size: 150%;
+        }
+
+        #photos_description {
+            margin-top: -0.5vh;
+            font-size: 100%;
+            color: gray;
+            font-style: italic;
+        }
+    }
+
+    #photos_cont{
+        border-radius: 0px 0px 15px 15px;
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        overscroll-behavior-inline: contain;
+        .photo_container{
+            margin: 2%;
+            min-width: 238px;
+            width: 35%;
+            max-width: 322px;
+            height: 35vh;
+            display: flex;
+            img{
+                width: 100%;
+                flex-grow: 1;
+                border-radius: 15px;
+            }
+        }
+    }
+    #photos_cont::-webkit-scrollbar{
+        height: 5px;
+    }
+
+
+    #photos_cont::-webkit-scrollbar-thumb{
+        background-color: #a3a09ea4;
+        border-radius: 25px;
+    }
+    
+    
+}
+
+#submit{
+    border-radius: 25px;
+}

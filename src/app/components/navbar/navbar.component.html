@@ -1,0 +1,73 @@
+<nav class="navbar navbar-light bg-light fixed-top">
+    <div class="container-fluid">
+        
+        <a class="navbar-brand" routerLink="/dogs">
+            <img src="../../../assets/images/DateDogLogo.png" class="logo" alt="">
+            Date Dog
+        </a>
+        <div class="d-flex  justify-content-end">
+            <form class="d-flex" role="search" >
+                <input class="form-control me-2 " type="search" placeholder="Search" aria-label="Search" data-bs-toggle="modal" data-bs-target="#modalId">
+            </form>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
+                    <img src="../../../assets/images/DateDogLogo.png" class="logo" alt="">
+                    Date Dog
+                </h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="col-12 profile ">
+                    <div class="col-4 profile_photo_container">
+                        <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" >
+                    </div>
+                    <div class="col-7 profile_info_container ">
+                        <div class="fullName">Eliezer Diaz Uyola</div>
+                        <hr>
+                        <div class="username">E018</div>
+                    </div>
+                </div>
+
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-1 mt-3 items">
+                    <li class="nav-item mt-1 p-3" routerLink="/dogs/add_dog" data-bs-dismiss="offcanvas">
+                        <div class="text">
+                            <div class="title">Add Dog</div>
+                            <div class="description">Add New Dog</div>
+                        </div>
+                        <i class="bi bi-arrow-right"></i>
+                    </li>
+                    <li class="nav-item mt-1 p-3" routerLink="/dogs/my_dogs" data-bs-dismiss="offcanvas">
+                        <div class="text">
+                            <div class="title">My Dogs</div>
+                            <div class="description">My Dogs</div>
+                        </div>
+                        <i class="bi bi-arrow-right"></i>
+                    </li>
+                    <li class="nav-item mt-1 p-3" routerLink="/users/edit_profile" data-bs-dismiss="offcanvas">
+                        <div class="text">
+                            <div class="title">Edit my Profile</div>
+                            <div class="description">Edit and Update my Profile</div>
+                        </div>
+                        <i class="bi bi-arrow-right"></i>
+                    </li>
+                    <li class="nav-item mt-1 p-3 log_out" routerLink="/dogs/add_dog" data-bs-dismiss="offcanvas">
+                        <div class="text">
+                            <div class="title">Sign Out</div>
+                            <div class="description">Sign out from this Profile</div>
+                        </div>
+                        <i class="bi bi-box-arrow-right"></i>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Modal -->
+
+<app-search-modal class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true"></app-search-modal>
