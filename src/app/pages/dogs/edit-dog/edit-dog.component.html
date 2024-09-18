@@ -1,108 +1,127 @@
-<div class="container p-3 mt-lg-5 mt-md-3 mt-sm-0">
-    <form>
-        <div class="row d-flex justify-content-center">
+<div class="container p-3 mt-5 col-lg-7 col-md-8 col-sm-12">
+    
+    <form [formGroup]="form" (submit)="onSubmit()">
+        <div class="row mt-sm-5 mt-md-1 mt-lg-0 mb-3">
+            <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                <input type="radio" class="btn-check"  name="btnradio" id="btncheck1EditDog" autocomplete="off" checked (change)="notEditPhotos()"  />
+                <label class="btn btn-outline-primary" for="btncheck1EditDog" >Information</label>
+            
+                <input type="radio" class="btn-check" name="btnradio" id="btncheck2EditDog" autocomplete="off" (change)="editPhotos()"/>
+                <label class="btn btn-outline-primary" for="btncheck2EditDog">Photos</label>
+            
+
+            </div>
+            
+        </div>
+        <div *ngIf="editingPhotos" class="row d-flex justify-content-center">
             <div class="col-4" id="profile_container">
-                <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
+                <img [src]="previewProfileUrl || '../../../../assets/images/NoProfilePhoto.png'" alt="">
+                <input type="file" class="form-control" (change)="uploadProfileImage($event)" aria-describedby="fileHelpId"/>
+                
             </div>
         </div>
 
-        <div class="row d-flex justify-content-center">
+        <div *ngIf="!editingPhotos" class="row d-flex justify-content-center">
             <div class=" col-10 mb-3">
-                <label for="" class="form-label">Name</label>
-                <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""/>
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control" name="name" id="name" [(ngModel)]="dog.name" formControlName="name" aria-describedby="helpId" placeholder=""/>
             </div>
         </div>
         
-        <div class="row d-flex justify-content-center">
-            <div class="mb-3 col-5">
-                <label for="" class="form-label">Breed</label>
-                <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""/>
+        <div *ngIf="!editingPhotos" class="row d-flex justify-content-center">
+            <div class="mb-3 col-5" data-bs-toggle="modal" data-bs-target="#modalBreed2Id">
+                <label for="breed" class="form-label">Breed</label>
+                <input type="text" class="form-control" name="breed" id="breed" readonly [value]="dog.breed" [(ngModel)]="dog.breed" formControlName="breed" aria-describedby="helpId" placeholder=""/>
             </div>
             <div class="mb-3 col-5">
-                <label for="" class="form-label">Sex</label>
-                <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""/>
+                <label class="form-label"> Sex</label>
+                <br>
+
+                <input type="radio" class="btn-check" name="sex" id="option5" autocomplete="off" formControlName="sex" value="male" checked >
+                <label class="btn" for="option5">Masculino</label>
+
+                <input type="radio" class="btn-check" name="sex" id="option6" autocomplete="off" formControlName="sex" value="female" >
+                <label class="btn" for="option6">Femenino</label>
             </div>
         </div>
 
 
-        <div class="row d-flex justify-content-center">
-            <div class="mb-3 col-10">
-                <label for="" class="form-label">Date of Birth</label>
-                <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""/>
-            </div>
-        </div>
 
-        <div class="row mt-4 p-2 d-flex justify-content-center " id="vaccines">
-            <div class="col-10 bg-light" id="vaccine_header">
-                <div id="vaccine_title">
-                    Vacunas
+
+        <div *ngIf="editingPhotos" class="row mt-4 p-2 d-flex justify-content-center " id="vaccines">
+
+            
+            <div class="col-10 bg-light d-flex justify-content-between" id="vaccine_header">
+                <div class="col-5">
+                    <div id="vaccine_title">
+                        Vacunas
+                    </div>
+                    <div id="vaccines_description">
+                        Fotos de la vacuna de "Nombre"
+                    </div>
                 </div>
-                <div id="vaccines_description">
-                    Fotos de la vacuna de "Nombre"
+                <div class="d-flex justify-content-end col-5">
+
+                    <div class="mb-3" id="addVaccinePhoto">
+                        <div>
+                            <i class="bi bi-plus-circle"></i>
+                        </div>
+                        <input type="file" class="form-control" aria-describedby="fileHelpId" (change)="uploadVaccineImage($event)"/>
+                    </div>
                 </div>
             </div>
     
-            <div class="col-10 bg-light" id="vaccine_photos">
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
+            <div  class="col-10 bg-light" id="vaccine_photos">
+                <div class="photo_container" *ngFor="let vaccine of dog.vaccinePhotos">
+                    <img [src]="vaccine.imgUrl" alt="">
+                    <div>
+                        <div (click)="removeImageVaccine(vaccine)" class="deleteVaccinePhotos">
+                            <i class="bi bi-trash3"></i>
+                        </div>
+                    </div>
                 </div>
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-                </div>
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-                </div>
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-                </div>
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-                </div>
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-                </div>
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
+                <div *ngIf="dog.vaccinePhotos.length == 0" class="photo_container">
+                    <img src="../../../../assets/images/NoProfilePhoto.png" alt="">
                 </div>
             </div>
         </div>
     
-        <div class="row mt-4  p-2 d-flex justify-content-center" id="photos">
-            <div class="col-10 bg-light" id="photos_header">
-                <div id="photos_title">
-                    Fotos
+        <div *ngIf="editingPhotos" class="row mt-4  p-2 d-flex justify-content-center" id="photos">
+            <div class="col-10 bg-light d-flex justify-content-between" id="photos_header">
+                <div class="col-5">
+                    <div id="photos_title">
+                        Fotos
+                    </div>
+                    <div id="photos_description">
+                        Fotos de "Nombre"
+                    </div>
                 </div>
-                <div id="photos_description">
-                    Fotos de "Nombre"
+                <div class="d-flex justify-content-end col-5">
+                    <div class="mb-3" id="addGeneralPhoto">
+                        <div>
+                            <i class="bi bi-plus-circle"></i>
+                        </div>
+                        <input type="file" class="form-control" name="" id="" placeholder="" aria-describedby="fileHelpId" (change)="uploadImage($event)"/>
+                    </div>
                 </div>
             </div>
     
             <div class="col-10 bg-light" id="photos_cont">
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
+                <div  class="photo_container" *ngFor="let photo of dog.photos">
+                    <img [src]="photo.imgUrl" alt="">
+                    <div>
+                        <div (click)="removeImage(photo)" class="deletePhoto">
+                            <i class="bi bi-trash3"></i>
+                        </div>
+                    </div>
                 </div>
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-                </div>
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-                </div>
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-                </div>
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-                </div>
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-                </div>
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
+                <div *ngIf="dog.photos.length == 0" class="photo_container">
+                    <img src="../../../../assets/images/NoProfilePhoto.png" alt="">
                 </div>
             </div>
         </div>
 
-        <div class="mb-3 row d-flex justify-content-center">
+        <div *ngIf="!editingPhotos" class="mb-3 row d-flex justify-content-center">
             <div class="col-10 d-flex justify-content-center">
                 <button type="submit" id="submit" class="btn btn-primary col-10">
                     Agregar
@@ -111,3 +130,5 @@
         </div>
     </form>
 </div>
+
+<app-breeds-modal (sendBreeds)="receiveBreed($event)" class="modal fade" id="modalBreed2Id" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true"></app-breeds-modal>

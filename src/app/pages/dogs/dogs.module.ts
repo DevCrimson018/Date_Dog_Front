@@ -10,6 +10,7 @@ import { MyDogsComponent } from './my-dogs/my-dogs.component';
 import { DogDetailsComponent } from './dog-details/dog-details.component';
 import { AddDogComponent } from './add-dog/add-dog.component';
 import { EditDogComponent } from './edit-dog/edit-dog.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -25,6 +26,7 @@ import { EditDogComponent } from './edit-dog/edit-dog.component';
   imports: [
     CommonModule,
     DogsRoutingModule,
+    ReactiveFormsModule,
     RouterOutlet,
     ComponentsModule
 ]

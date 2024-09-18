@@ -1,95 +1,64 @@
-<div class="container">
+<div class="container mt-5">
     <div class="row d-flex justify-content-center " id="user_info">
         <div class="col-sm-12 col-md-10 col-lg-8 pt-5 mt-md-3 mt-sm-0 d-flex justify-content-between bg-light">
             <div class="col-3 follow" id="followed">
-                <h2>407</h2>
+                <h2>{{followeds.length}}</h2>
                 <small>Siguiendo</small>
             </div>
             <div class="col-4" id="profile_container">
-                <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
+                <img [src]="user.imgUrl || '../../../../assets/images/NoProfilePhoto.png'" alt="">
             </div>
             <div class="col-3 follow" id="followers">
-                <h2>407</h2>
+                <h2>{{followers.length}}</h2>
                 <small>Seguidores</small>
             </div>
         </div>
     </div>
     <div class="row d-flex justify-content-center" id="name">
         <div class="col-sm-12 col-md-10 col-lg-8 bg-light pb-5 pt-3">
-            <h2>Frangie</h2>
-            <small>frangie-08</small>
+            <h2>{{user.firstName}}</h2>
+            <small>{{user.username}}</small>
         </div>
     </div>
+    <div *ngIf="sameUser == false " class="row d-flex justify-content-center" id="set_follow" >
+        <div (click)="followUnfollow()" class="col-sm-12 col-md-10 col-lg-8 bg-light pb-5 pt-1 d-flex justify-content-center" >
+            <i [class]=" following ? 'bi bi-person-fill' : 'bi bi-person'" style="color:blue"></i>
+        </div>
+    </div>
+
     <div class="row d-flex justify-content-center" id="options">
         <div class="col-sm-12 col-md-10 col-lg-8 mb-5 btn-group bg-light" role="group" aria-label="Basic checkbox toggle button group">
             
-                <input type="radio" class="btn-check" checked value="false" name="btnradio" id="btncheck1" autocomplete="off" (change)="showDogsFunction()" />
-                <label class="btn btn-outline-primary" for="btncheck1"  >Perros</label>
+                <input type="radio" class="btn-check" checked value="true" name="btnradioProfile" id="btncheck1Profile" autocomplete="off" value="dogs" [(ngModel)]="show"  />
+                <label class="btn btn-outline-primary" for="btncheck1Profile">Perros</label>
             
-                <input type="radio" class="btn-check" value="true" name="btnradio" id="btncheck2" autocomplete="off" (change)="showAboutMe()"/>
-                <label class="btn btn-outline-primary" for="btncheck2" >Sobre Mi</label >            
+                <input type="radio" class="btn-check" value="false" name="btnradioProfile" id="btncheck2Profile" autocomplete="off" value="aboutMe" [(ngModel)]="show" />
+                <label class="btn btn-outline-primary" for="btncheck2Profile" >Sobre Mi</label >            
         </div>
     </div>
 
-    @if (showDogs) {
-        <div class="row d-flex justify-content-center " id="dogs">
+    @if (show == "dogs") {
+        <div *ngFor="let dog of dogs" class="row d-flex justify-content-center " id="dogs" [routerLink]="'/dogs/dog_details/' + dog._id">
             <div class="col-sm-12 col-md-10 col-lg-8 mt-3 d-flex justify-content-between bg-light  dogs_container" id="">
                 <div class="col-3   dog_photo_container" >
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
+                    <img [src]="dog.profilePhoto || '../../../../assets/images/NoProfilePhoto.png'" alt="">
                 </div>
                 <div class="col-5 dog_info">
-                    <h2>Kira</h2>
-                    <small>Pug</small>
+                    <h2>{{dog.name}}</h2>
+                    <small>{{dog.breed}}</small>
                 </div>
                 <div class="col-4 age_sex">
                     <div class="age">
-                        Adulto
+                        {{dog.dob | date: 'MM-yyyy'}}
                     </div>
                     <div class="sex">
-                        Femenino
+                        {{dog.sex}}
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="row d-flex justify-content-center " id="dogs">
-            <div class="col-sm-12 col-md-10 col-lg-8 mt-3 d-flex justify-content-between bg-light  dogs_container" id="">
-                <div class="col-3   dog_photo_container" >
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-                </div>
-                <div class="col-5 dog_info">
-                    <h2>Kira</h2>
-                    <small>Pug</small>
-                </div>
-                <div class="col-4 age_sex">
-                    <div class="age">
-                        Adulto
-                    </div>
-                    <div class="sex">
-                        Femenino
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row d-flex justify-content-center " id="dogs">
-            <div class="col-sm-12 col-md-10 col-lg-8 mt-3 d-flex justify-content-between bg-light  dogs_container" id="">
-                <div class="col-3   dog_photo_container" >
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-                </div>
-                <div class="col-5 dog_info">
-                    <h2>Kira</h2>
-                    <small>Pug</small>
-                </div>
-                <div class="col-4 age_sex">
-                    <div class="age">
-                        Adulto
-                    </div>
-                    <div class="sex">
-                        Femenino
-                    </div>
-                </div>
-            </div>
-        </div>
+       
     }@else {
         <div class="row d-flex justify-content-center " id="about_me">
             <div class="col-sm-12 col-md-10 col-lg-8 mt-3 d-flex justify-content-between bg-light  about_me_container" id="">
@@ -97,11 +66,11 @@
                     <i class="bi bi-person-circle " style="color: blue;"></i>
                 </div>
                 <div class="col-5 ">
-                    <h2>Frangie</h2>
+                    <h2>{{user.firstName}}</h2>
                     <small>Nombre</small>
                 </div>
                 <div class="col-5 ">
-                    <h2>Frangie</h2>
+                    <h2>{{user.lastName}}</h2>
                     <small>Apellido</small>
                 </div>
             </div>
@@ -110,34 +79,34 @@
                     <i class="bi bi-envelope " style="color: rgba(240, 240, 8, 0.884)"></i>
                 </div>
                 <div class="col-5 ">
-                    <h2>frangie08gmail.com</h2>
+                    <h2>{{user.email}}</h2>
                     <small>Email</small>
                 </div>
             </div>
-            <div class="col-sm-12 col-md-10 col-lg-8 mt-3 d-flex  bg-light  about_me_container" id="">
+            <div *ngIf="user.instagram" class="col-sm-12 col-md-10 col-lg-8 mt-3 d-flex  bg-light  about_me_container" id="">
                 <div class="col-2   icon_container" >
                     <i class="bi bi-instagram " style="color: rgba(255, 88, 10, 0.815);"></i>
                 </div>
                 <div class="col-5 ">
-                    <h2>frangie008</h2>
+                    <h2>{{user.instagram}}</h2>
                     <small>Instagram</small>
                 </div>    
             </div>
-            <div class="col-sm-12 col-md-10 col-lg-8 mt-3 d-flex  bg-light  about_me_container" id="">
+            <div *ngIf="user.facebook" class="col-sm-12 col-md-10 col-lg-8 mt-3 d-flex  bg-light  about_me_container" id="">
                 <div class="col-2   icon_container" >
                     <i class="bi bi-facebook " style="color: rgba(0, 110, 255, 0.849);"></i>
                 </div>
                 <div class="col-5 ">
-                    <h2>elio_diaz</h2>
+                    <h2>{{user.facebook}}</h2>
                     <small>Facebook</small>
                 </div>
             </div>
-            <div class="col-sm-12 col-md-10 col-lg-8 mt-3 d-flex  bg-light  about_me_container" id="">
+            <div *ngIf="user.whatsapp" class="col-sm-12 col-md-10 col-lg-8 mt-3 d-flex  bg-light  about_me_container" id="">
                 <div class="col-2   icon_container" >
                     <i class="bi bi-whatsapp " style="color: rgba(0, 255, 21, 0.849);"></i>
                 </div>
                 <div class="col-5 ">
-                    <h2>8299999999</h2>
+                    <h2>{{user.whatsapp}}</h2>
                     <small>Whatsapp</small>
                 </div>
             </div>

@@ -7,6 +7,8 @@ import { SigninComponent } from './signin/signin.component';
 import { RouterModule } from '@angular/router';
 import { SignupComponent } from './signup/signup.component';
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ComponentsModule } from "../../components/components.module";
 
 
 @NgModule({
@@ -19,7 +21,9 @@ import { VerifyEmailComponent } from './verify-email/verify-email.component';
   imports: [
     CommonModule,
     OnboardingRoutingModule,
-    RouterModule
-  ]
+    RouterModule,
+    ReactiveFormsModule,
+    ComponentsModule
+]
 })
 export class OnboardingModule { }

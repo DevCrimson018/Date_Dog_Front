@@ -1,110 +1,85 @@
 <div class="container">
-    <div class="row mt-md-4 d-flex">
-        <div class="col-12 p-0" id="profilePhotoContainer">
-            <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66cf230176411002cbf068f4%2FprofilePhoto%2FprofilePhoto?alt=media&token=6946a04c-3e43-4b85-9187-998cde0ddcf6" alt="">
-        </div>
-        <div class="col-12 bg-light d-flex justify-content-between p-2" id="dogInfo">
-            <div class="col-7" id="general_info">
-                <div id="name_breed">
-                    <div id="name">Kisa</div>
-                    <div id="breed">Pug</div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-sm-12 col-md-10 col-lg-9">
+            <div class="row mt-md-4 d-flex">
+                <div class="col-12 p-0" id="profilePhotoContainer">
+                    <img [src]="dog.profilePhoto! || '../../../../assets/images/NoProfilePhoto.png'" alt="">
                 </div>
-                
-                <div id="age_sex">
-                    <div id="age">
-                        Adulto
+                <div class="col-12 bg-light d-flex justify-content-between p-2" id="dogInfo">
+                    <div class="col-7" id="general_info">
+                        <div id="name_breed">
+                            <div id="name">{{dog.name}}</div>
+                            <div id="breed">{{dog.breed}}</div>
+                        </div>
+                        
+                        <div id="age_sex">
+                            <div id="age">
+                                {{dog.dob | date : 'MM-yyyy'}}
+                            </div>
+                            <div id="sex">
+                                {{dog.sex}}
+                            </div>
+                        </div>
                     </div>
-                    <div id="sex">
-                        Femenino
+        
+                    <div class="col-4" id="ownerPhotoContainer" [routerLink]="'/users/user_details/'+dog.idOwner">
+                        <div >
+                            <img [src]="dog.photoOwner || '../../../../assets/images/NoProfilePhoto.png'" alt="">
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-4" id="ownerPhotoContainer">
-                <div >
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
+        
+            <div class="row mt-3 bg-light p-2" id="about_me">
+                <div class="col-12" >
+                    <div>
+                        <p id="about_me_title">About Me</p>
+                        <div id="about_me_description">
+                            Es una pug, pesa 6.2 lb, mide 2 pl, tiene sus vacunas al dia, comenzó su cinta el 10/02/2023, terminará el 15/02/2023. Es una pug, pesa 6.2 lb, mide 2 pl, tiene sus vacunas al dia, comenzó su cinta el 10/02/2023, terminará el 15/02/2023. Es una pug, pesa 6.2 lb, mide 2 pl, tiene sus vacunas al dia, comenzó su cinta el 10/02/2023, terminará el 15/02/2023. Es una pug, pesa 6.2 lb, mide 2 pl, tiene sus vacunas al dia, comenzó su cinta el 10/02/2023, terminará el 15/02/2023. Es una pug, pesa 6.2 lb, mide 2 pl, tiene sus vacunas al dia, comenzó su cinta el 10/02/2023, terminará el 15/02/2023. Es una pug, pesa 6.2 lb, mide 2 pl, tiene sus vacunas al dia, comenzó su cinta el 10/02/2023, terminará el 15/02/2023.
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="row mt-3 bg-light p-2" id="about_me">
-        <div class="col-12" >
-            <div>
-                <p id="about_me_title">About Me</p>
-                <div id="about_me_description">
-                    Es una pug, pesa 6.2 lb, mide 2 pl, tiene sus vacunas al dia, comenzó su cinta el 10/02/2023, terminará el 15/02/2023. Es una pug, pesa 6.2 lb, mide 2 pl, tiene sus vacunas al dia, comenzó su cinta el 10/02/2023, terminará el 15/02/2023. Es una pug, pesa 6.2 lb, mide 2 pl, tiene sus vacunas al dia, comenzó su cinta el 10/02/2023, terminará el 15/02/2023. Es una pug, pesa 6.2 lb, mide 2 pl, tiene sus vacunas al dia, comenzó su cinta el 10/02/2023, terminará el 15/02/2023. Es una pug, pesa 6.2 lb, mide 2 pl, tiene sus vacunas al dia, comenzó su cinta el 10/02/2023, terminará el 15/02/2023. Es una pug, pesa 6.2 lb, mide 2 pl, tiene sus vacunas al dia, comenzó su cinta el 10/02/2023, terminará el 15/02/2023.
+        
+            <div class="row mt-4 bg-light p-2 " id="vaccines">
+                <div class="col-12" id="vaccine_header">
+                    <div id="vaccine_title">
+                        Vacunas
+                    </div>
+                    <div id="vaccines_description">
+                        Fotos de la vacuna de "Nombre"
+                    </div>
+                </div>
+        
+                <div class="col-12" id="vaccine_photos">
+                    <div *ngFor="let vaccine of dog.vaccinePhotos" class="photo_container">
+                        <img [src]="vaccine.imgUrl" alt="">
+                    </div>
+                    <div *ngIf="dog.vaccinePhotos.length == 0" class="photo_container">
+                        <img src="../../../../assets/images/NoProfilePhoto.png" alt="">
+                    </div>
+        
                 </div>
             </div>
-        </div>
-    </div>
-
-    <div class="row mt-4 bg-light p-2 " id="vaccines">
-        <div class="col-12" id="vaccine_header">
-            <div id="vaccine_title">
-                Vacunas
-            </div>
-            <div id="vaccines_description">
-                Fotos de la vacuna de "Nombre"
-            </div>
-        </div>
-
-        <div class="col-12" id="vaccine_photos">
-            <div class="photo_container">
-                <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-            </div>
-            <div class="photo_container">
-                <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-            </div>
-            <div class="photo_container">
-                <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-            </div>
-            <div class="photo_container">
-                <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-            </div>
-            <div class="photo_container">
-                <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-            </div>
-            <div class="photo_container">
-                <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-            </div>
-            <div class="photo_container">
-                <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-            </div>
-        </div>
-    </div>
-
-    <div class="row mt-4 bg-light p-2 " id="photos">
-        <div class="col-12" id="photos_header">
-            <div id="photos_title">
-                Fotos
-            </div>
-            <div id="photos_description">
-                Fotos de "Nombre"
-            </div>
-        </div>
-
-        <div class="col-12" id="photos_cont">
-            <div class="photo_container">
-                <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-            </div>
-            <div class="photo_container">
-                <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-            </div>
-            <div class="photo_container">
-                <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-            </div>
-            <div class="photo_container">
-                <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-            </div>
-            <div class="photo_container">
-                <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-            </div>
-            <div class="photo_container">
-                <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-            </div>
-            <div class="photo_container">
-                <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
+        
+            <div class="row mt-4 bg-light p-2 " id="photos">
+                <div class="col-12" id="photos_header">
+                    <div id="photos_title">
+                        Fotos
+                    </div>
+                    <div id="photos_description">
+                        Fotos de "Nombre"
+                    </div>
+                </div>
+        
+                <div class="col-12" id="photos_cont">
+                    <div *ngFor="let photo of dog.photos" class="photo_container">
+                        <img [src]="photo.imgUrl" alt="">
+                    </div>
+                    <div *ngIf="dog.photos.length == 0" class="photo_container">
+                        <img src="../../../../assets/images/NoProfilePhoto.png" alt="">
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -3,7 +3,7 @@
     border-radius: 25px;
     img{
         width: 100%;
-        height: 55vh;
+        height: 65vh;
         object-fit: cover;
         border-radius: 15px;
     }
@@ -71,9 +71,12 @@
                 
             }
         }
-
-
     }
+
+    #ownerPhotoContainer:hover{
+        cursor: pointer;
+    }
+
 }
 
 #about_me{

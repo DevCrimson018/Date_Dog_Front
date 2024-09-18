@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row d-flex justify-content-sm-center justify-content-lg-end    ">
-        <div class="col-sm-12 col-md-6 col-lg-4 bg-secondary  mt-5 " id="signin_container">
+        <form [formGroup]="form" (submit)="onSubmit()" class="col-sm-12 col-md-6 col-lg-4 bg-secondary  mt-5 " id="signin_container">
 
             <div class="col-6" id="logo_container">
                 <img src="../../../../assets/images/DateDogLogo.png" alt="">
@@ -8,14 +8,14 @@
 
             <div class="col-10 mt-5">
                 <div class="mb-3">
-                    <label for="" class="form-label">Username</label>
-                    <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""/>
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" formControlName="email" name="email" id="email" aria-describedby="helpId" placeholder="Type Here: "/>
                 </div>
             </div>
             <div class="col-10 mb-3">
                 <div class="mb-3">
-                    <label for="" class="form-label">Password</label>
-                    <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""/>
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" formControlName="password" name="password" id="password" aria-describedby="helpId" placeholder="Type Here: "/>
                 </div>
             </div>
 
@@ -28,6 +28,6 @@
                 </div>
                 
             </div>
-        </div>
+        </form>
     </div>
 </div>

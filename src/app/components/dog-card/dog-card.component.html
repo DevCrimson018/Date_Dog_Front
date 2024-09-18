@@ -1,27 +1,27 @@
-<div class="row mt-md-4 d-flex">
-    <div class="col-12 p-0" id="profilePhotoContainer">
-        <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66cf230176411002cbf068f4%2FprofilePhoto%2FprofilePhoto?alt=media&token=6946a04c-3e43-4b85-9187-998cde0ddcf6" alt="">
+<div class="row mt-md-4 d-flex" >
+    <div class="col-12 p-0" id="profilePhotoContainer" [routerLink]="'/dogs/dog_details/'+dog._id">
+        <img [src]="dog.profilePhoto || '../../../assets/images/NoProfilePhoto.png'" alt="">
     </div>
-    <div class="col-12 bg-light d-flex justify-content-between p-2" id="dogInfo">
-        <div class="col-7" id="general_info">
+    <div class="col-12 bg-light d-flex justify-content-between p-2" id="dogInfo" >
+        <div class="col-7" id="general_info" [routerLink]="'/dogs/dog_details/'+dog._id">
             <div id="name_breed">
-                <div id="name">Kisa</div>
-                <div id="breed">Pug</div>
+                <div id="name">{{dog.name}}</div>
+                <div id="breed">{{dog.breed}}</div>
             </div>
             
             <div id="age_sex">
                 <div id="age">
-                    Adulto
+                    {{dog.dob | date : 'MM-yyyy'}}
                 </div>
                 <div id="sex">
-                    Femenino
+                    {{dog.sex}}
                 </div>
             </div>
         </div>
 
-        <div class="col-4" id="ownerPhotoContainer">
+        <div class="col-4" id="ownerPhotoContainer" [routerLink]="'/users/user_details/'+dog.idOwner">
             <div >
-                <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
+                <img [src]="dog.photoOwner || '../../../assets/images/NoProfilePhoto.png'" alt="">
             </div>
         </div>
     </div>
