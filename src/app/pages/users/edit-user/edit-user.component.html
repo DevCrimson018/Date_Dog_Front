@@ -1,0 +1,106 @@
+<div class="container bg-secondary col-sm-12 col-md-6 col-lg-5 ">
+    <div class="row d-flex justify-content-center p-2 mt-5">
+        <div class="btn-group mt-3" role="group" aria-label="Basic checkbox toggle button group" >
+            <input type="radio" class="btn-check" name="btnradio"  id="btncheckPhoto" autocomplete="off" [(ngModel)]="seeing" checked value="photo"/>
+            <label class="btn btn-outline-primary" for="btncheckPhoto" >Profile Photo</label>
+        
+            <input type="radio" class="btn-check" name="btnradio" id="btncheckNames" autocomplete="off" [(ngModel)]="seeing" value="names" />
+            <label class="btn btn-outline-primary" for="btncheckNames"  >Names</label>
+        
+            <input type="radio" class="btn-check" name="btnradio" id="btncheckAddress" autocomplete="off" [(ngModel)]="seeing" value="address"/>
+            <label class="btn btn-outline-primary" for="btncheckAddress" >Address</label>
+
+            <input type="radio" class="btn-check" name="btnradio" id="btncheckPassword" autocomplete="off" [(ngModel)]="seeing" value="password"/>
+            <label class="btn btn-outline-primary" for="btncheckPassword" >Password</label>
+
+            <input type="radio" class="btn-check" name="btnradio" id="btncheckSocialMedia" autocomplete="off" [(ngModel)]="seeing" value="socialMedia"/>
+            <label class="btn btn-outline-primary" for="btncheckSocialMedia" >Social Media</label>
+        </div>
+        
+        <form  *ngIf="seeing == 'photo'" [formGroup]="formImgUrl" (ngSubmit)="onSubmitImage()" class="col-sm-12 col-md-6 col-lg-5 bg-secondary p-2 " class="edit_container" >
+            
+            <div class="col-3" id="profile_container_container">
+                <img [src]=" imgUrl || '../../../../assets/images/Add_Photo.png'" alt="">
+                <input type="file" class="form-control"  formControlName="imgUrl" name="imgUrl" id="imgUrl"  placeholder="" aria-describedby="fileHelpId" (change)="previewImage($event)" />
+            </div>
+            <div class="col-10 button_group">
+                <button type="submit" class="btn btn-primary col-10">
+                    Update
+                </button>
+            </div>
+        </form>    
+
+        <form *ngIf="seeing == 'names'" [formGroup]="formNames" (ngSubmit)="onSubmitNames()" class="col-sm-12 col-md-6 col-lg-5 bg-secondary p-2 " class="edit_container">
+            <div class="col-10 d-flex justify-content-between">
+                <div class="col-6 p-sm-0 p-lg-1">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input type="text" class="form-control"  name="firstName" formControlName="firstName" id="firstName" aria-describedby="helpId" placeholder="Type Here:" [(ngModel)]="user.firstName" />
+                </div>
+                <div class="col-6 p-sm-0 p-lg-1 ">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" name="lastName" formControlName="lastName" id="lastName" aria-describedby="helpId" placeholder="Type Here:" [(ngModel)]="user.lastName"/>
+                </div>
+            </div>
+            <div class="col-10 button_group">
+                <button type="submit" class="btn btn-primary col-10">
+                    Update
+                </button>
+            </div>
+
+        </form>
+
+        <form *ngIf="seeing == 'address'" [formGroup]="formAddress" (ngSubmit)="onSubmitAddress()" class="col-sm-12 col-md-6 col-lg-5 bg-secondary p-2 " class="edit_container">
+            <div class="col-10 ">
+                <label for="address" class="form-label">Address</label>
+                <input type="text" class="form-control" formControlName="address" name="address" id="address" aria-describedby="helpId" placeholder="Type Here:" [(ngModel)]="user.address"/>
+            </div>
+            <div class="col-10 button_group">
+                <button type="submit" class="btn btn-primary col-10">
+                    Update
+                </button>
+            </div>
+        </form>
+        <form *ngIf="seeing == 'password'" [formGroup]="formPassword" (ngSubmit)="onSubmitPassword()" class="col-sm-12 col-md-6 col-lg-5 bg-secondary p-2 " class="edit_container">
+            <div class="col-10 ">
+                <label for="oldPassword" class="form-label">Old Password</label>
+                <input type="password" class="form-control" formControlName="oldPassword" name="oldPassword" id="oldPassword" aria-describedby="helpId" placeholder="Type Here:"/>
+            </div>
+            <div class="col-10 ">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" formControlName="password" name="password" id="password" aria-describedby="helpId" placeholder="Type Here:"/>
+            </div>
+            <div class="col-10 ">
+                <label for="repeatPassword" class="form-label">Repeat Password</label>
+                <input type="password" class="form-control" formControlName="repeatPassword" name="repeatPassword" id="repeatPassword" aria-describedby="helpId" placeholder="Type Here:"/>
+            </div>
+            <div class="col-10 button_group">
+                <button type="submit" class="btn btn-primary col-10">
+                    Update
+                </button>
+            </div>
+        </form>
+
+        <form *ngIf="seeing == 'socialMedia'" [formGroup]="formSocialMedia" (ngSubmit)="onSubmitSocialMedia()" class="col-sm-12 col-md-6 col-lg-5 bg-secondary p-2 " class="edit_container">
+            <div class="col-10 ">
+                <label for="facebook" class="form-label">Facebook</label>
+                <input type="text" class="form-control" formControlName="facebook" name="facebook" id="facebook" aria-describedby="helpId" placeholder="Type Here:" [(ngModel)]="user.facebook"/>
+            </div>
+            <div class="col-10 ">
+                <label for="instagram" class="form-label">Instagram</label>
+                <input type="text" class="form-control" formControlName="instagram" name="instagram" id="instagram" aria-describedby="helpId" placeholder="Type Here:" [(ngModel)]="user.instagram"/>
+            </div>
+            <div class="col-10 ">
+                <label for="whatsapp" class="form-label">Whatsapp</label>
+                <input type="text" class="form-control" formControlName="whatsapp" name="whatsapp" id="whatsapp" aria-describedby="helpId" placeholder="Type Here:" [(ngModel)]="user.whatsapp"/>
+            </div>
+            <div class="col-10 button_group">
+                <button type="submit" class="btn btn-primary col-10">
+                    Update
+                </button>
+            </div>
+            
+        </form>
+
+        
+    </div>
+</div>

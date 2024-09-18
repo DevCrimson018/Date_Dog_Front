@@ -10,9 +10,9 @@ const routes: Routes = [
   {path: "", redirectTo: "followed_users_dogs", pathMatch: "full"},
   {path: "followed_users_dogs", component: FollowedUsersDogsComponent},
   {path: "my_dogs", component: MyDogsComponent},
-  {path: "dog_details", component: DogDetailsComponent},
+  {path: "dog_details/:id", component: DogDetailsComponent},
   {path: "add_dog", component: AddDogComponent},
-  {path: "edit_dog", component: EditDogComponent}
+  {path: "edit_dog/:id", component: EditDogComponent}
 ];
 
 @NgModule({

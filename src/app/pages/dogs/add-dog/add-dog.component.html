@@ -1,113 +1,133 @@
-<div class="container p-3 mt-lg-5 mt-md-3 mt-sm-0">
-    <form>
-        <div class="row d-flex justify-content-center">
-            <div class="col-4" id="profile_container">
-                <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-            </div>
-        </div>
-
-        <div class="row d-flex justify-content-center">
-            <div class=" col-10 mb-3">
-                <label for="" class="form-label">Name</label>
-                <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""/>
-            </div>
-        </div>
+<div class="container mt-lg-5 mt-md-3 mt-sm-12">
+    <div class="row d-flex justify-content-center">
+        <div class="p-3  col-sm-12 col-md-10 col-lg-8 ">
+            <form [formGroup]="form" (submit)="onSubmit()" class="bg-info container_sec p-3 mt-5">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-4" id="profile_container">
+                        <img [src]="imgUrl || '../../../../assets/images/NoProfilePhoto.png'" alt="">
+                        <input type="file" class="form-control" (change)="previewImage($event)" aria-describedby="fileHelpId"/>
+                        
+                    </div>
+                </div>
         
-        <div class="row d-flex justify-content-center">
-            <div class="mb-3 col-5">
-                <label for="" class="form-label">Breed</label>
-                <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""/>
-            </div>
-            <div class="mb-3 col-5">
-                <label for="" class="form-label">Sex</label>
-                <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""/>
-            </div>
-        </div>
+                <div class="row d-flex justify-content-center">
+                    <div class=" col-10 mb-3">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" class="form-control" name="name" id="name" formControlName="name" aria-describedby="helpId" placeholder=""/>
+                    </div>
+                </div>
+                
+                <div class="row d-flex justify-content-center">
+                    <div class="mb-3 col-5" data-bs-toggle="modal" data-bs-target="#modalBreed2Id">
+                        <label for="breed" class="form-label">Breed</label>
+                        <input type="text" class="form-control" aria-describedby="helpId" formControlName="breed" readonly [value]="breed" [(ngModel)]="breed" (change)="checkForm()"/>
 
+                        
+                    </div>
+                    <div class="mb-3 col-5">
+                        <label class="form-label"> Sex</label>
+                        <br>
 
-        <div class="row d-flex justify-content-center">
-            <div class="mb-3 col-10">
-                <label for="" class="form-label">Date of Birth</label>
-                <input type="text" class="form-control" name="" id="" aria-describedby="helpId" placeholder=""/>
-            </div>
-        </div>
+                        <input type="radio" class="btn-check" name="sex" id="option5" autocomplete="off" formControlName="sex" value="male" checked >
+                        <label class="btn" for="option5">Masculino</label>
 
-        <div class="row mt-4 p-2 d-flex justify-content-center " id="vaccines">
-            <div class="col-10 bg-light" id="vaccine_header">
-                <div id="vaccine_title">
-                    Vacunas
+                        <input type="radio" class="btn-check" name="sex" id="option6" autocomplete="off" formControlName="sex" value="female" >
+                        <label class="btn" for="option6">Femenino</label>
+                    </div>
                 </div>
-                <div id="vaccines_description">
-                    Fotos de la vacuna de "Nombre"
+        
+        
+                <div class="row d-flex justify-content-center">
+                    <div class="mb-3 col-10">
+                        <label for="dob" class="form-label">Date of Birth</label>
+                        <input type="date" class="form-control" name="dob" id="dob" formControlName="dob" aria-describedby="helpId" placeholder=""/>
+                    </div>
+                    
                 </div>
-            </div>
-    
-            <div class="col-10 bg-light" id="vaccine_photos">
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
+        
+                <div class="row mt-4 p-2 d-flex justify-content-center " id="vaccines">
+        
+                    
+                    <div class="col-10 bg-light d-flex justify-content-between" id="vaccine_header">
+                        <div class="col-5">
+                            <div id="vaccine_title">
+                                Vacunas
+                            </div>
+                            <div id="vaccines_description">
+                                Fotos de la vacuna de "Nombre"
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end col-5">
+                            <div class="mb-3 me-1" id="deleteVaccinePhotos">
+                                <div (click)="removeImagesVaccine()">
+                                    <i class="bi bi-trash3"></i>
+                                </div>
+                            </div>
+                            <div class="mb-3" id="addVaccinePhoto">
+                                <div>
+                                    <i class="bi bi-plus-circle"></i>
+                                </div>
+                                <input type="file" class="form-control" name="" id="" placeholder="" aria-describedby="fileHelpId" (change)="previewImageVaccine($event)"/>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="col-10 bg-light" id="vaccine_photos">
+                        <div class="photo_container" *ngFor="let url of imgUrlsVaccine">
+                            <img [src]="url" alt="">
+                        </div>
+                        <div *ngIf="imgUrlsVaccine.length == 0" class="photo_container">
+                            <img src="../../../../assets/images/NoProfilePhoto.png" alt="">
+                        </div>
+                    </div>
                 </div>
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
+            
+                <div class="row mt-4  p-2 d-flex justify-content-center" id="photos">
+                    <div class="col-10 bg-light d-flex justify-content-between" id="photos_header">
+                        <div class="col-5">
+                            <div id="photos_title">
+                                Fotos
+                            </div>
+                            <div id="photos_description">
+                                Fotos de "Nombre"
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end col-5">
+                            <div class="mb-3 me-1" id="deletePhotos">
+                                <div (click)="removeImages()">
+                                    <i class="bi bi-trash3"></i>
+                                </div>
+                            </div>
+                            <div class="mb-3" id="addGeneralPhoto">
+                                <div>
+                                    <i class="bi bi-plus-circle"></i>
+                                </div>
+                                <input type="file" class="form-control" name="" id="" placeholder="" aria-describedby="fileHelpId" (change)="previewImages($event)"/>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <div class="col-10 bg-light" id="photos_cont">
+                        <div *ngFor="let url of imgUrls" class="photo_container">
+                            <img [src]="url" alt="">
+                        </div>
+                        <div *ngIf="imgUrls.length == 0" class="photo_container">
+                            <img src="../../../../assets/images/NoProfilePhoto.png" alt="">
+                        </div>
+                    </div>
                 </div>
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
+        
+                <div class="mb-3 row d-flex justify-content-center">
+                    <div class="col-10 d-flex justify-content-center">
+                        <button type="submit" id="submit" class="btn btn-primary col-10">
+                            Agregar
+                        </button>
+                    </div>
                 </div>
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-                </div>
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-                </div>
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-                </div>
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-                </div>
-            </div>
+            </form>
         </div>
-    
-        <div class="row mt-4  p-2 d-flex justify-content-center" id="photos">
-            <div class="col-10 bg-light" id="photos_header">
-                <div id="photos_title">
-                    Fotos
-                </div>
-                <div id="photos_description">
-                    Fotos de "Nombre"
-                </div>
-            </div>
-    
-            <div class="col-10 bg-light" id="photos_cont">
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-                </div>
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-                </div>
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-                </div>
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-                </div>
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-                </div>
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-                </div>
-                <div class="photo_container">
-                    <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" alt="">
-                </div>
-            </div>
-        </div>
-
-        <div class="mb-3 row d-flex justify-content-center">
-            <div class="col-10 d-flex justify-content-center">
-                <button type="submit" id="submit" class="btn btn-primary col-10">
-                    Agregar
-                </button>
-            </div>
-        </div>
-    </form>
+    </div>
 </div>
+
+
+<app-breeds-modal (sendBreeds)="receiveBreed($event)" class="modal fade" id="modalBreed2Id" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true"></app-breeds-modal>

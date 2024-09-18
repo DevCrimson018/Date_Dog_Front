@@ -1,0 +1,31 @@
+<div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="modalTitleId">
+                Municipality
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" [(ngModel)]="searchProvince" name="search" id="search" aria-describedby="helpId" placeholder="Search: "/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <ul class="list-group">
+                            <li class="list-group-item mb-1" data-bs-dismiss="modal" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#modalId" *ngFor="let province of provinces | filterLocations: searchProvince " (click)="sendProvinceFunction(province.name)">{{province.name}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

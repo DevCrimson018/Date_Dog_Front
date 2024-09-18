@@ -7,7 +7,7 @@
         </a>
         <div class="d-flex  justify-content-end">
             <form class="d-flex" role="search" >
-                <input class="form-control me-2 " type="search" placeholder="Search" aria-label="Search" data-bs-toggle="modal" data-bs-target="#modalId">
+                <input class="form-control me-2 " type="search" placeholder="Search" aria-label="Search" data-bs-toggle="modal" data-bs-target="#modalId" readonly>
             </form>
             <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
                 <span class="navbar-toggler-icon"></span>
@@ -24,12 +24,12 @@
             <div class="offcanvas-body">
                 <div class="col-12 profile ">
                     <div class="col-4 profile_photo_container">
-                        <img src="https://firebasestorage.googleapis.com/v0/b/todo-d36d4.appspot.com/o/users%2F66ce704304b82d0af77c1a6d%2FprofilePhoto%2FprofilePhoto?alt=media&token=63c1c1b1-2777-43c2-84f8-9675475b063b" >
+                        <img [src]="user.imgUrl || '../../../assets/images/NoProfilePhoto.png'" >
                     </div>
                     <div class="col-7 profile_info_container ">
-                        <div class="fullName">Eliezer Diaz Uyola</div>
+                        <div class="fullName">{{user.firstName}} {{user.lastName}}</div>
                         <hr>
-                        <div class="username">E018</div>
+                        <div class="username">{{user.username}}</div>
                     </div>
                 </div>
 
@@ -48,14 +48,21 @@
                         </div>
                         <i class="bi bi-arrow-right"></i>
                     </li>
-                    <li class="nav-item mt-1 p-3" routerLink="/users/edit_profile" data-bs-dismiss="offcanvas">
+                    <li class="nav-item mt-1 p-3" [routerLink]="'/users/user_details/' + user._id" data-bs-dismiss="offcanvas">
+                        <div class="text">
+                            <div class="title">My Profile</div>
+                            <div class="description">See My Profile</div>
+                        </div>
+                        <i class="bi bi-arrow-right"></i>
+                    </li>
+                    <li class="nav-item mt-1 p-3" routerLink="/users/edit_user" data-bs-dismiss="offcanvas">
                         <div class="text">
                             <div class="title">Edit my Profile</div>
                             <div class="description">Edit and Update my Profile</div>
                         </div>
                         <i class="bi bi-arrow-right"></i>
                     </li>
-                    <li class="nav-item mt-1 p-3 log_out" routerLink="/dogs/add_dog" data-bs-dismiss="offcanvas">
+                    <li class="nav-item mt-1 p-3 log_out" (click)="signOut()" data-bs-dismiss="offcanvas">
                         <div class="text">
                             <div class="title">Sign Out</div>
                             <div class="description">Sign out from this Profile</div>
@@ -68,6 +75,15 @@
     </div>
 </nav>
 
+
 <!-- Modal -->
 
-<app-search-modal class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true"></app-search-modal>
+<app-search-modal [breed]="breed" [locality]="locality" [municipality]="municipality" [province]="province" class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true"></app-search-modal>
+
+<app-localities-modal (sendLocality)="receiveLocality($event)" class="modal fade" id="modalLocalityId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true"></app-localities-modal>
+
+<app-municipalities-modal (sendMunicipality)="receiveMunicipality($event)" class="modal fade" id="modalMunicipalityId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true"></app-municipalities-modal>
+
+<app-provinces-modal (sendProvinces)="receiveProvince($event)" class="modal fade" id="modalProvinceId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true"></app-provinces-modal>
+
+<app-breeds-modal commingFrom="navbar" (sendBreeds)="receiveBreed($event)" class="modal fade" id="modalBreedId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true"></app-breeds-modal>

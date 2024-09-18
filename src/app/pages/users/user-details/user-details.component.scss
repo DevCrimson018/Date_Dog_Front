@@ -1,3 +1,12 @@
+#set_follow{
+    div:hover{
+        cursor: pointer;
+    }
+    i{
+        font-size: 250%;
+    }
+}   
+
 
 #profile_container{
 
@@ -27,6 +36,9 @@
 
 .dogs_container{
     border-radius: 15px;
+}
+.dogs_container:hover{
+    cursor: pointer;
 }
 
 .dog_photo_container{

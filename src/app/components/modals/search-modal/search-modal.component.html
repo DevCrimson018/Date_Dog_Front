@@ -1,0 +1,135 @@
+
+<div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="modalTitleId">
+                Search
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                <div class="row d-flex justify-content-center" id="options">
+                    <div class="col-12  mb-2 btn-group bg-light" role="group" aria-label="Basic checkbox toggle button group">
+                        
+                            <input type="radio" class="btn-check"  value="false" name="btnradio" id="btncheck1" autocomplete="off" value="users" [(ngModel)]="show" checked />
+                            <label class="btn btn-outline-primary" for="btncheck1"  > <i class="bi bi-person-circle"></i> Usuarios</label>
+                        
+                            <input type="radio" class="btn-check" value="true" name="btnradio" id="btncheck2" autocomplete="off" value="dogs" [(ngModel)]="show"/>
+                            <label class="btn btn-outline-primary" for="btncheck2" >Perros </label >            
+                    </div>
+                </div>
+                <div class="row" id="searchbar">
+                    <div class="col-12">
+                        <div class="mb-1" id="searchbarContainer">
+                            <input type="text" class="form-control" name="search" id="search" aria-describedby="helpId" [(ngModel)]="search" placeholder="Search"/>
+                            <div (click)="searchFunction()"  id="searchbarButton"><i class="bi bi-search" style="color: white;"></i></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row d-flex align-items-center justify-content-between" *ngIf="show == 'dogs' " id="dogs_filter">
+                   
+                    <div class="col-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="Male" [(ngModel)]="male" id="flexCheckDefault">
+                            <label class="form-check-label" for="flexCheckDefault">
+                              Masculino
+                            </label>
+                        </div>
+                        <div class="form-check" >
+                            <input class="form-check-input" type="checkbox" value="Female" [(ngModel)]="female" id="flexCheckChecked">
+                            <label class="form-check-label" for="flexCheckChecked">
+                              Femenino
+                            </label>
+                        </div>
+                    </div>
+                    
+
+                    <div class=" col-sm-8 col-md-9">
+                        <div class="col-12">
+                            <div class="input-group mb-3">
+                                @if (locality != "") {
+                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Locality</button>
+                                }@else if (municipality != "") {
+                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Municipality</button>
+                                }@else if (province) {
+                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Province</button>
+                                }@else {
+                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">N/A</button>
+                                }
+                                
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-item" (click)="clearAddress()">N/A</li>
+                                    <li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalLocalityId">Localities</li>
+                                    <li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalMunicipalityId">Municipalities</li>
+                                    <li class="dropdown-item" data-bs-toggle="modal" data-bs-target="#modalProvinceId">Provinces</li>
+                                  </ul>
+        
+                                @if (locality != "") {
+                                    <input type="text" class="form-control"aria-describedby="helpId" readonly [value]="locality" />
+                                }@else if (municipality != "") {
+                                    <input type="text" class="form-control"aria-describedby="helpId" readonly [value]="municipality" />
+                                }@else if (province) {
+                                    <input type="text" class="form-control"aria-describedby="helpId" readonly [value]="province" />
+                                }@else {
+                                    <input type="text" class="form-control"aria-describedby="helpId" readonly value="N/A" />
+                                }
+                                
+                            </div>
+                        </div>
+    
+                        <div class="col-12">
+                            <div class="input-group mb-3" data-bs-toggle="modal" data-bs-target="#modalBreedId" >
+                                <span class="input-group-text">Breed</span>
+                                <input type="text" class="form-control" aria-describedby="helpId" readonly [value]="breed"/>
+                            </div>
+                        </div>
+                    </div>
+                  
+                </div>
+     
+                
+                
+                
+                @if(show == 'users') {
+                    <div class="row mt-3" id="items">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex" *ngFor="let user of users" data-bs-dismiss="modal" [routerLink]="'/users/user_details/' + user._id">
+                                <div class="col-1 item_photo_container">
+                                    <img [src]="user.imgUrl || '../../../assets/images/NoProfilePhoto.png'" alt="">
+                                </div>
+                                <div class="col-10 item_info_container">
+                                    <div class="item_title">{{user.firstName}}</div>
+                                    <div class="item_subtitle">{{user.username}}</div>
+                                </div>
+                                <div class="col-1 icon_container">
+                                    <i class=" bi bi-arrow-right"></i>
+                                </div>
+                            </li>
+                          </ul>
+                    </div>
+                }@else{
+                    <div class="row mt-3" id="items">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex" *ngFor="let dog of dogs" data-bs-dismiss="modal"  [routerLink]="'dog_details/'+dog._id">
+                                <div class="col-1 item_photo_container">
+                                    <img [src]="dog.profilePhoto || '../../../assets/images/NoProfilePhoto.png'" alt="">
+                                </div>
+                                <div class="col-10 item_info_container">
+                                    <div class="item_title">{{dog.name}}</div>
+                                    <div class="item_subtitle">{{dog.breed}}</div>
+                                </div>
+                                <div class="col-1 icon_container">
+                                    <i class=" bi bi-arrow-right"></i>
+                                </div>
+                            </li>
+                          </ul>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
+
+

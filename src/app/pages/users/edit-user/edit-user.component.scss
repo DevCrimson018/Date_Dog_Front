@@ -1,0 +1,46 @@
+.edit_container{
+
+    z-index: 2;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center;
+    height: 75vh;
+    // min-width: 386px;
+    
+    border-radius: 15px;
+    
+}
+
+
+#profile_container_container{
+    display: flex;
+    position: relative;
+    background-color: white;
+
+    border-radius: 100%;
+    #imgUrl{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+
+    }
+    img{
+        width: 100%;
+        object-fit: cover;
+        border-radius: 100%;
+        aspect-ratio: 1/1;
+    }
+}
+
+.button_group{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .btn{
+        margin: 2% 0px;
+        border-radius: 25px;
+    }
+}
