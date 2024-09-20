@@ -13,7 +13,9 @@ export class SignService {
     private router: Router
   ) { }
 
-  apiUrl = "http://localhost:3000/api/sign"
+  apiUrl = "https://date-dog-back.onrender.com/api/sign"
+  // apiUrl = "http://localhost:3000/api/sign"
+  
 
   signUp(form: any) {
     return firstValueFrom(

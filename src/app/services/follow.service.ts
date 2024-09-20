@@ -12,7 +12,8 @@ export class FollowService {
     private httpClient: HttpClient
   ) { }
 
-  apiUrl = "http://localhost:3000/api/follow"
+  apiUrl = "https://date-dog-back.onrender.com/api/follow"
+  // apiUrl = "http://localhost:3000/api/follow"
 
   isFollowed(idUser : string ) {
     const payload:any = jwtDecode(localStorage.getItem("user_token")!) 

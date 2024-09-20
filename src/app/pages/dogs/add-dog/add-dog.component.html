@@ -5,7 +5,7 @@
                 <div class="row d-flex justify-content-center">
                     <div class="col-4" id="profile_container">
                         <img [src]="imgUrl || '../../../../assets/images/NoProfilePhoto.png'" alt="">
-                        <input type="file" class="form-control" (change)="previewImage($event)" aria-describedby="fileHelpId"/>
+                        <input [disabled]="loading" type="file" class="form-control" (change)="previewImage($event)" aria-describedby="fileHelpId"/>
                         
                     </div>
                 </div>
@@ -13,14 +13,14 @@
                 <div class="row d-flex justify-content-center">
                     <div class=" col-10 mb-3">
                         <label for="name" class="form-label">Name</label>
-                        <input type="text" class="form-control" name="name" id="name" formControlName="name" aria-describedby="helpId" placeholder=""/>
+                        <input type="text" [readOnly]="loading" class="form-control" name="name" id="name" formControlName="name" aria-describedby="helpId" placeholder=""/>
                     </div>
                 </div>
                 
                 <div class="row d-flex justify-content-center">
                     <div class="mb-3 col-5" data-bs-toggle="modal" data-bs-target="#modalBreed2Id">
                         <label for="breed" class="form-label">Breed</label>
-                        <input type="text" class="form-control" aria-describedby="helpId" formControlName="breed" readonly [value]="breed" [(ngModel)]="breed" (change)="checkForm()"/>
+                        <input type="text" [readOnly]="loading" class="form-control" aria-describedby="helpId" formControlName="breed" readonly [value]="breed" [(ngModel)]="breed" (change)="checkForm()"/>
 
                         
                     </div>
@@ -28,10 +28,10 @@
                         <label class="form-label"> Sex</label>
                         <br>
 
-                        <input type="radio" class="btn-check" name="sex" id="option5" autocomplete="off" formControlName="sex" value="male" checked >
+                        <input type="radio" [disabled]="loading" class="btn-check" name="sex" id="option5" autocomplete="off" formControlName="sex" value="male" checked >
                         <label class="btn" for="option5">Masculino</label>
 
-                        <input type="radio" class="btn-check" name="sex" id="option6" autocomplete="off" formControlName="sex" value="female" >
+                        <input type="radio" [disabled]="loading" class="btn-check" name="sex" id="option6" autocomplete="off" formControlName="sex" value="female" >
                         <label class="btn" for="option6">Femenino</label>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                 <div class="row d-flex justify-content-center">
                     <div class="mb-3 col-10">
                         <label for="dob" class="form-label">Date of Birth</label>
-                        <input type="date" class="form-control" name="dob" id="dob" formControlName="dob" aria-describedby="helpId" placeholder=""/>
+                        <input type="date" [disabled]="loading" class="form-control" name="dob" id="dob" formControlName="dob" aria-describedby="helpId" placeholder=""/>
                     </div>
                     
                 </div>
@@ -67,7 +67,7 @@
                                 <div>
                                     <i class="bi bi-plus-circle"></i>
                                 </div>
-                                <input type="file" class="form-control" name="" id="" placeholder="" aria-describedby="fileHelpId" (change)="previewImageVaccine($event)"/>
+                                <input [disabled]="loading" type="file" class="form-control" name="" id="" placeholder="" aria-describedby="fileHelpId" (change)="previewImageVaccine($event)"/>
                             </div>
                         </div>
                     </div>
@@ -102,7 +102,7 @@
                                 <div>
                                     <i class="bi bi-plus-circle"></i>
                                 </div>
-                                <input type="file" class="form-control" name="" id="" placeholder="" aria-describedby="fileHelpId" (change)="previewImages($event)"/>
+                                <input [disabled]="loading" type="file" class="form-control" name="" id="" placeholder="" aria-describedby="fileHelpId" (change)="previewImages($event)"/>
                             </div>
                         </div>
                     </div>
@@ -119,12 +119,27 @@
         
                 <div class="mb-3 row d-flex justify-content-center">
                     <div class="col-10 d-flex justify-content-center">
-                        <button type="submit" id="submit" class="btn btn-primary col-10">
+                        <button type="submit" [disabled]="loading" id="submit" class="btn btn-primary col-10">
                             Agregar
                         </button>
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-loading bg-light" *ngIf="loading">
+    <div class="row">
+        <div class="col-12 loading-container">
+            <h2>Cargando...</h2>
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="spinner-border text-primary spinner-border-sm" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            
         </div>
     </div>
 </div>

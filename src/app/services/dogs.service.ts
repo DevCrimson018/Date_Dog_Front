@@ -11,7 +11,8 @@ export class DogsService {
     private httpClient: HttpClient
   ) { }
 
-  apiUrl = "http://localhost:3000/api/dogs"
+  apiUrl = "https://date-dog-back.onrender.com/api/dogs"
+  // apiUrl = "http://localhost:3000/api/dogs"
 
   getDogs(query?: any) {
     if (query == undefined) {

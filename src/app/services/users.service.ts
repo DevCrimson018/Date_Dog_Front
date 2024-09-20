@@ -11,7 +11,8 @@ export class UsersService {
     private httpClient: HttpClient
   ) { }
 
-  apiUrl = "http://localhost:3000/api/users"
+  apiUrl = "https://date-dog-back.onrender.com/api/users"
+  // apiUrl = "http://localhost:3000/api/users"
 
   getUsers(query: any) {
     return firstValueFrom(

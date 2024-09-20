@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { jwtDecode } from 'jwt-decode';
 import { UsersService } from '../../../services/users.service';
@@ -10,6 +10,13 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
   styleUrl: './edit-user.component.scss'
 })
 export class EditUserComponent {
+
+  loading: boolean = false
+
+  @ViewChild('localityEdit') localityEditInput!: ElementRef
+  @ViewChild('municipalityEdit') municipalityEditInput!: ElementRef
+  @ViewChild('provinceEdit') provinceEditInput!: ElementRef
+
   user: any = jwtDecode(localStorage.getItem("user_token")!)
 
   seeing: string = "photo"
@@ -38,7 +45,9 @@ export class EditUserComponent {
     })
     this.formAddress = new FormGroup({
       _id: new FormControl(this.user._id),
-      address: new FormControl('', Validators.required),
+      locality: new FormControl('', Validators.required),
+      municipality: new FormControl('', Validators.required),
+      province: new FormControl('', Validators.required),
     })
     this.formPassword = new FormGroup({
       _id: new FormControl(this.user._id),
@@ -63,45 +72,97 @@ export class EditUserComponent {
   }
 
   onSubmitImage() {
-    this.storage.upload(`users/${this.user._id}/profilePhoto/profilePhoto`, this.imgFile)
+    this.loading = true
+    this.storage.upload(`users/${this.user._id}/profilePhoto/profilePhoto`, this.imgFile).then(() => {
+      this.loading = false
+    })
   }
 
   onSubmitNames() {
-    console.log(this.formNames.value)
+    this.loading = true
+
     
     this.userService.updateUser(this.user._id, this.formNames.value).then(newToken => {
       this.updateToken(newToken.token)
+      this.loading = false
     })
   }
   onSubmitAddress() {
-    this.userService.updateUser(this.user._id, this.formAddress.value)
+    this.loading = true
+
+    let address = {
+      _id : this.formAddress.value._id,
+      address: {
+        locality: this.formAddress.value.locality,
+        municipality: this.formAddress.value.municipality,
+        province: this.formAddress.value.province,
+      }
+    }
+
+    this.userService.updateUser(this.user._id, address).then(async () => {
+      this.loading = false
+    })
   }
   onSubmitPassword() {
+
+    this.loading = false
+
     //Check the password is correct
     const password = this.formPassword.value.password
     const repeatPassword = this.formPassword.value.repeatPassword
 
     if(password == repeatPassword) {
       this.userService.updateUser(this.user._id, this.formPassword.value).then(res => {
+        this.loading = false
         if(res.message) {
           alert( res.message)
         }else{
           alert("Done")
         }
+        
       })
     }else{
       alert("Las Contrasenas no son iguales")
     }
 
+
     
   }
 
   onSubmitSocialMedia() {
-    this.userService.updateUser(this.user._id, this.formSocialMedia.value)
+    this.loading = true
+    this.userService.updateUser(this.user._id, this.formSocialMedia.value).then(() => {
+      this.loading = false
+    })
   }
 
 
+  receiveLocality($event: any) {
+    this.localityEditInput.nativeElement.value = $event
+    console.log(this.localityEditInput.nativeElement.value);
+    
+    this.formAddress.value.locality = $event
+    console.log(this.formAddress.value);
+    
+    
+  }
 
+  receiveMunicipality($event: any) {
+    this.municipalityEditInput.nativeElement.value = $event
+    console.log(this.municipalityEditInput.nativeElement.value);
+    
+    this.formAddress.value.municipality = $event
+    console.log(this.formAddress.value);
+    
+  }
+
+  receiveProvince($event: any) {
+    this.provinceEditInput.nativeElement.value = $event
+    console.log(this.provinceEditInput.nativeElement.value);
+    
+    this.formAddress.value.province = $event
+    console.log(this.formAddress.value);
+  }
 
 
   previewImage($event: any) {

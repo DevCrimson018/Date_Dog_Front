@@ -19,7 +19,11 @@
                 <div class="row">
                     <div class="col-12">
                         <ul class="list-group">
-                            <li class="list-group-item mb-1" data-bs-dismiss="modal" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#modalId" *ngFor="let municipality of municipalities | filterLocations: searchMunicipality " (click)="sendMunicipalityFunction(municipality.name)">{{municipality.name}}</li>
+                            @if (commingFrom == "navbar") {
+                                <li class="list-group-item mb-1" data-bs-dismiss="modal" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#modalId" *ngFor="let municipality of municipalities | filterLocations: searchMunicipality " (click)="sendMunicipalityFunction(municipality.name)">{{municipality.name}}</li>
+                            }@else {
+                                <li class="list-group-item mb-1" data-bs-dismiss="modal"  *ngFor="let municipality of municipalities | filterLocations: searchMunicipality " (click)="sendMunicipalityFunction(municipality.name)">{{municipality.name}}</li>
+                            }
                         </ul>
                     </div>
                 </div>

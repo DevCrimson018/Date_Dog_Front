@@ -11,6 +11,8 @@ import { jwtDecode } from 'jwt-decode';
   styleUrl: './user-details.component.scss'
 })
 export class UserDetailsComponent {
+  loading:boolean = true
+
   sameUser: boolean = false
   
   show: string = "dogs"
@@ -43,7 +45,9 @@ export class UserDetailsComponent {
       this.user = user
       this.getFolloweds(id)
       this.getFollowers(id)
-      this.getDogs(id)
+      this.getDogs(id).then(() => {
+        this.loading = false
+      })
       console.log(this.user);
     })
     
@@ -119,6 +123,7 @@ export class UserDetailsComponent {
 
   startPage() {
     this.route.params.subscribe(async params => {
+      this.loading = true
       const id = params['id']
       await this.getUser(id)
       this.checkIsSameUser(id)

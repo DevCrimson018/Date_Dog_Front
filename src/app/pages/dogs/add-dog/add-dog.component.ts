@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { DogsService } from '../../../services/dogs.service';
 import { FormControl, FormGroup } from '@angular/forms';
-import { UsersService } from '../../../services/users.service';
 import { jwtDecode } from 'jwt-decode';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-dog',
@@ -11,6 +12,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
   styleUrl: './add-dog.component.scss'
 })
 export class AddDogComponent {
+  loading: boolean = false
 
   imgUrl: any
   imgFile: any
@@ -33,7 +35,8 @@ export class AddDogComponent {
   constructor(
     private dogService: DogsService,
     private storage: AngularFireStorage,
-    private userService: UsersService
+    private http: HttpClient,
+    private router: Router
   ) {
     this.form = new FormGroup({
       name: new FormControl(),
@@ -46,7 +49,11 @@ export class AddDogComponent {
   }
 
   async onSubmit() {
+
+    this.loading = true
+
     if(this.form.value.dob >= Date.now()) {
+      this.loading = false
       return alert("La fecha no puede ser hoy o mayor")
     }
     this.form.value.breed = this.breed
@@ -60,7 +67,10 @@ export class AddDogComponent {
     await this.dogService.addDog(this.form.value).then(async newDog => {
       await this.uploadImages(newDog._id).then(async () => {
         await this.uploadVaccinesImages(newDog._id).then(async () => {
-          await this.uploadImage(newDog._id, payload._id)
+          await this.uploadImage(newDog._id, payload._id).then(() => {
+            this.loading = false
+            this.router.navigate(['dogs/my_dogs'])
+          })
         })
       })
     })
@@ -176,6 +186,17 @@ export class AddDogComponent {
     }
     this.breed = $event
   }
+
+
+  loadFirstImage() {
+    this.http.get("assets/images/NoProfilePhoto.png", {responseType: 'blob'}).subscribe((blob) => {
+      console.log(blob);
+      this.imgFile = new File([blob], 'noProfilePhoto.png', {type: blob.type})
+      console.log(this.imgFile);
+      
+    })
+  }
+
 
   checkForm() {
     console.log(this.form.value);

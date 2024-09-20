@@ -1,40 +1,49 @@
 <div class="container">
-    <div class="row d-flex justify-content-center">
+    <div class="row d-flex justify-content-center" [class]="loading == true ? 'placeholder-glow' : ''">
         <div class="col-sm-12 col-md-10 col-lg-9">
             <div class="row mt-md-4 d-flex">
                 <div class="col-12 p-0" id="profilePhotoContainer">
-                    <img [src]="dog.profilePhoto! || '../../../../assets/images/NoProfilePhoto.png'" alt="">
+                    <img [class]="loading == true ? 'placeholder' : ''" [src]="dog.profilePhoto! || '../../../../assets/images/NoProfilePhoto.png'" alt="">
                 </div>
                 <div class="col-12 bg-light d-flex justify-content-between p-2" id="dogInfo">
                     <div class="col-7" id="general_info">
                         <div id="name_breed">
-                            <div id="name">{{dog.name}}</div>
-                            <div id="breed">{{dog.breed}}</div>
+                            <div id="name" [class]="loading == true ? 'placeholder' : ''">{{dog.name}}</div>
+                            <div id="breed" [class]="loading == true ? 'placeholder' : ''">{{dog.breed}}</div>
                         </div>
                         
                         <div id="age_sex">
-                            <div id="age">
+                            <div id="age" [class]="loading == true ? 'placeholder' : ''">
                                 {{dog.dob | date : 'MM-yyyy'}}
                             </div>
-                            <div id="sex">
+                            <div id="sex" [class]="loading == true ? 'placeholder' : ''">
                                 {{dog.sex}}
                             </div>
                         </div>
                     </div>
         
-                    <div class="col-4" id="ownerPhotoContainer" [routerLink]="'/users/user_details/'+dog.idOwner">
-                        <div >
-                            <img [src]="dog.photoOwner || '../../../../assets/images/NoProfilePhoto.png'" alt="">
+                    @if (loading) {
+                        <div class="col-4" id="ownerPhotoContainer">
+                            <div >
+                                <img class="placeholder" src="../../../../assets/images/NoProfilePhoto.png" alt="">
+                            </div>
                         </div>
-                    </div>
+                    }@else {
+                        <div class="col-4" id="ownerPhotoContainer" [routerLink]="'/users/user_details/'+dog.idOwner">
+                            <div >
+                                <img [src]="dog.photoOwner || '../../../../assets/images/NoProfilePhoto.png'" alt="">
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         
             <div class="row mt-3 bg-light p-2" id="about_me">
                 <div class="col-12" >
                     <div>
-                        <p id="about_me_title">About Me</p>
-                        <div id="about_me_description">
+                        <p id="about_me_title" [class]="loading == true ? 'placeholder' : ''">About Me</p>
+                        <br *ngIf="loading">
+                        <div id="about_me_description" [class]="loading == true ? 'col-8 placeholder' : ''">
                             Es una pug, pesa 6.2 lb, mide 2 pl, tiene sus vacunas al dia, comenzó su cinta el 10/02/2023, terminará el 15/02/2023. Es una pug, pesa 6.2 lb, mide 2 pl, tiene sus vacunas al dia, comenzó su cinta el 10/02/2023, terminará el 15/02/2023. Es una pug, pesa 6.2 lb, mide 2 pl, tiene sus vacunas al dia, comenzó su cinta el 10/02/2023, terminará el 15/02/2023. Es una pug, pesa 6.2 lb, mide 2 pl, tiene sus vacunas al dia, comenzó su cinta el 10/02/2023, terminará el 15/02/2023. Es una pug, pesa 6.2 lb, mide 2 pl, tiene sus vacunas al dia, comenzó su cinta el 10/02/2023, terminará el 15/02/2023. Es una pug, pesa 6.2 lb, mide 2 pl, tiene sus vacunas al dia, comenzó su cinta el 10/02/2023, terminará el 15/02/2023.
                         </div>
                     </div>
@@ -43,10 +52,11 @@
         
             <div class="row mt-4 bg-light p-2 " id="vaccines">
                 <div class="col-12" id="vaccine_header">
-                    <div id="vaccine_title">
+                    <div id="vaccine_title" [class]="loading == true ? 'placeholder' : ''">
                         Vacunas
                     </div>
-                    <div id="vaccines_description">
+                    <br *ngIf="loading">
+                    <div id="vaccines_description" [class]="loading == true ? 'placeholder' : ''">
                         Fotos de la vacuna de "Nombre"
                     </div>
                 </div>
@@ -56,7 +66,7 @@
                         <img [src]="vaccine.imgUrl" alt="">
                     </div>
                     <div *ngIf="dog.vaccinePhotos.length == 0" class="photo_container">
-                        <img src="../../../../assets/images/NoProfilePhoto.png" alt="">
+                        <img [class]="loading == true ? 'placeholder' : ''" src="../../../../assets/images/NoProfilePhoto.png" alt="">
                     </div>
         
                 </div>
@@ -64,10 +74,11 @@
         
             <div class="row mt-4 bg-light p-2 " id="photos">
                 <div class="col-12" id="photos_header">
-                    <div id="photos_title">
+                    <div id="photos_title" [class]="loading == true ? 'placeholder' : ''">
                         Fotos
                     </div>
-                    <div id="photos_description">
+                    <br *ngIf="loading">
+                    <div id="photos_description" [class]="loading == true ? 'placeholder' : ''">
                         Fotos de "Nombre"
                     </div>
                 </div>
@@ -77,7 +88,15 @@
                         <img [src]="photo.imgUrl" alt="">
                     </div>
                     <div *ngIf="dog.photos.length == 0" class="photo_container">
-                        <img src="../../../../assets/images/NoProfilePhoto.png" alt="">
+                        <img [class]="loading == true ? 'placeholder' : ''" src="../../../../assets/images/NoProfilePhoto.png" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" *ngIf="isOwner">
+                <div class="col-12 d-flex justify-content-center mb-5">
+                    <div [class]="loading ? 'placeholder btn btn-primary col-8' : 'btn btn-primary col-8'" [routerLink]="loading ? './' : '/dogs/edit_dog/'+dog._id">
+                        Editar Perro
                     </div>
                 </div>
             </div>

@@ -9,6 +9,14 @@ import { UsersService } from '../../../services/users.service';
 })
 export class SearchModalComponent {
 
+  loading: boolean = false
+  
+  userMessage:string = "Ejecuta una busqueda"
+  userSubMessage:string = "Si quieres obtener una busqueda general, solo oprime el boton de buscar"
+
+  dogMessage:string = "Ejecuta una busqueda"
+  dogSubMessage:string = "Si quieres obtener una busqueda general, solo oprime el boton de buscar"
+
   @Input() locality: string = ""
   @Input() municipality: string = ""
   @Input() province: string = ""
@@ -79,7 +87,13 @@ export class SearchModalComponent {
 
 
     this.dogService.getDogs(query).then(dogs => {
+      this.loading = true
       this.dogs = dogs
+      if(this.dogs.length == 0){
+        this.dogMessage = "No hay resultados con estos filtros"
+        this.dogSubMessage = "Intenta una nueva busqueda, quizas tengas suerte en la proxima"
+      }
+      this.loading = false
       console.log(dogs);
       
     })
@@ -87,11 +101,19 @@ export class SearchModalComponent {
   }
 
   searchUsers() {
+
+    this.loading = true
     console.log("searchin users");
     
     const query = `search=${this.search}`
     this.userService.getUsers(query).then(users => {
       this.users = users
+      this.loading = false
+      if(this.users.length == 0){
+        this.userMessage = "No hay resultados con estos filtros"
+        this.userSubMessage = "Intenta una nueva busqueda, quizas tengas suerte en la proxima"
+      }
+
       console.log(users);
     })
   }

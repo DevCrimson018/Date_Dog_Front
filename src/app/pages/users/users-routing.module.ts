@@ -4,7 +4,7 @@ import { UserDetailsComponent } from './user-details/user-details.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 
 const routes: Routes = [
-  {path: "", redirectTo: "user_details", pathMatch: "full"},
+  {path: "", redirectTo: "edit_user", pathMatch: "full"},
   {path: "user_details/:id", component: UserDetailsComponent},
   {path: "edit_user", component: EditUserComponent},
 ];

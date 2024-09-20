@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-localities-modal',
@@ -7,6 +7,9 @@ import { Component, EventEmitter, inject, Output } from '@angular/core';
   styleUrl: './localities-modal.component.scss'
 })
 export class LocalitiesModalComponent {
+
+  @Input() commingFrom: string = "navbar"
+
   localities: any 
   searchLocality: string = ""
   @Output() sendLocality: EventEmitter<any> = new EventEmitter()
@@ -17,6 +20,9 @@ export class LocalitiesModalComponent {
   ngOnInit(): void {
 
     this.getLocalities()
+
+    console.log(this.localities);
+    
   }
 
 

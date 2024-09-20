@@ -2,9 +2,32 @@
     <div class="row mt-5 d-flex justify-content-center">
         <div class="col-sm-12  col-lg-10">
             <div class="row">
-                <div class=" col-sm-12 col-md-6  col-lg-4 mt-2 mb-2 p-3" *ngFor="let dog of dogs">
-                    <dog-card [dog]="dog"></dog-card>
-                </div>
+
+                @if (loading == true) {
+                    <div class=" col-sm-12 col-md-6  col-lg-4 mt-2 mb-2 p-3" *ngFor="let dog of [1,1,1,1,1,1]">
+                        <dog-card [dog]="'placeholder'"></dog-card>
+                    </div>
+                }@else {
+                    @if (dogs.length == 0) {
+                        <div class="row d-flex justify-content-center mt-5">
+                            <div class="col-8">
+                                <div class="card">
+                                    <img class="card-img-top" src="../../../../assets/images/Dog1Photo.png" alt="Title" />
+                                    <div class="card-body">
+                                        <h4 class="card-title">Aun no sigues a nadie</h4>
+                                        <p class="card-text">Ve a buscar y encuentra nuevos dueños o perros para seguir</p>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    }@else {
+                        <div class=" col-sm-12 col-md-6  col-lg-4 mt-2 mb-2 p-3" *ngFor="let dog of dogs">
+                            <dog-card [dog]="dog"></dog-card>
+                        </div>
+                    }
+
+                }
             </div>
         </div>
 

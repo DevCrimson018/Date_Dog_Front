@@ -8,6 +8,7 @@ import { jwtDecode } from 'jwt-decode';
   styleUrl: './my-dogs.component.scss'
 })
 export class MyDogsComponent {
+  loading: boolean = true
   dogs: any[] = []
 
   constructor(
@@ -21,8 +22,12 @@ export class MyDogsComponent {
   }
 
   async getDogs() {
+    this.loading = true
     const payload:any = jwtDecode(localStorage.getItem("user_token")!)
-    this.dogs = await this.dogService.getDogs(`idOwner=${payload._id}`)
+    await this.dogService.getDogs(`idOwner=${payload._id}`).then(res => {
+      this.dogs = res
+      this.loading = false
+    })
     console.log(this.dogs);
     
   }

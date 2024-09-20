@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-municipalities-modal',
@@ -7,6 +7,9 @@ import { Component, EventEmitter, inject, Output } from '@angular/core';
   styleUrl: './municipalities-modal.component.scss'
 })
 export class MunicipalitiesModalComponent {
+
+  @Input() commingFrom: string = " navbar"
+
   municipalities: any 
   searchMunicipality: string = ""
   @Output() sendMunicipality: EventEmitter<any> = new EventEmitter()

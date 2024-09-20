@@ -31,13 +31,13 @@
                    
                     <div class="col-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="Male" [(ngModel)]="male" id="flexCheckDefault">
+                            <input class="form-check-input" type="checkbox" value="male" [(ngModel)]="male" id="flexCheckDefault">
                             <label class="form-check-label" for="flexCheckDefault">
                               Masculino
                             </label>
                         </div>
                         <div class="form-check" >
-                            <input class="form-check-input" type="checkbox" value="Female" [(ngModel)]="female" id="flexCheckChecked">
+                            <input class="form-check-input" type="checkbox" value="female" [(ngModel)]="female" id="flexCheckChecked">
                             <label class="form-check-label" for="flexCheckChecked">
                               Femenino
                             </label>
@@ -92,39 +92,87 @@
                 
                 
                 @if(show == 'users') {
-                    <div class="row mt-3" id="items">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex" *ngFor="let user of users" data-bs-dismiss="modal" [routerLink]="'/users/user_details/' + user._id">
-                                <div class="col-1 item_photo_container">
-                                    <img [src]="user.imgUrl || '../../../assets/images/NoProfilePhoto.png'" alt="">
+                    @if(loading) {
+                        <div class="col-12 d-flex justify-content-center mt-2">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                              </div>
+                        </div>
+   
+                    }@else {
+                        @if (users.length == 0) {
+                            <div class="row d-flex justify-content-center mt-5" id="no-dogs" routerLink="/dogs/add_dog">
+                                <div class="col-8">
+                                    <div class="card">
+                                        <img class="card-img-top" src="../../../../assets/images/Dog2Photo.png" alt="Title" />
+                                        <div class="card-body">
+                                            <h4 class="card-title">{{userMessage}}</h4>
+                                            <p class="card-text">{{userSubMessage}}</p>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
-                                <div class="col-10 item_info_container">
-                                    <div class="item_title">{{user.firstName}}</div>
-                                    <div class="item_subtitle">{{user.username}}</div>
-                                </div>
-                                <div class="col-1 icon_container">
-                                    <i class=" bi bi-arrow-right"></i>
-                                </div>
-                            </li>
-                          </ul>
-                    </div>
+                            </div>
+                        }@else {
+                            <div class="row mt-3" id="items">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex" *ngFor="let user of users" data-bs-dismiss="modal" [routerLink]="'/users/user_details/' + user._id">
+                                        <div class="col-1 item_photo_container">
+                                            <img [src]="user.imgUrl || '../../../assets/images/NoProfilePhoto.png'" alt="">
+                                        </div>
+                                        <div class="col-10 item_info_container">
+                                            <div class="item_title">{{user.firstName}}</div>
+                                            <div class="item_subtitle">{{user.username}}</div>
+                                        </div>
+                                        <div class="col-1 icon_container">
+                                            <i class=" bi bi-arrow-right"></i>
+                                        </div>
+                                    </li>
+                                  </ul>
+                            </div>
+                        }
+                    }
                 }@else{
-                    <div class="row mt-3" id="items">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item d-flex" *ngFor="let dog of dogs" data-bs-dismiss="modal"  [routerLink]="'dog_details/'+dog._id">
-                                <div class="col-1 item_photo_container">
-                                    <img [src]="dog.profilePhoto || '../../../assets/images/NoProfilePhoto.png'" alt="">
+                    @if(loading) {
+                        <div class="col-12 d-flex justify-content-center mt-2">
+                            <div class="spinner-border" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                              </div>
+                        </div>
+                    }@else {
+                        @if(dogs.length == 0) {
+                            <div class="row d-flex justify-content-center mt-5" id="no-dogs" routerLink="/dogs/add_dog">
+                                <div class="col-8">
+                                    <div class="card">
+                                        <img class="card-img-top" src="../../../../assets/images/Dog2Photo.png" alt="Title" />
+                                        <div class="card-body">
+                                            <h4 class="card-title">{{dogMessage}}</h4>
+                                            <p class="card-text">{{dogSubMessage}}</p>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
-                                <div class="col-10 item_info_container">
-                                    <div class="item_title">{{dog.name}}</div>
-                                    <div class="item_subtitle">{{dog.breed}}</div>
-                                </div>
-                                <div class="col-1 icon_container">
-                                    <i class=" bi bi-arrow-right"></i>
-                                </div>
-                            </li>
-                          </ul>
-                    </div>
+                            </div>
+                        }@else {
+                            <div class="row mt-3" id="items">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex" *ngFor="let dog of dogs" data-bs-dismiss="modal"  [routerLink]="'dog_details/'+dog._id">
+                                        <div class="col-1 item_photo_container">
+                                            <img [src]="dog.profilePhoto || '../../../assets/images/NoProfilePhoto.png'" alt="">
+                                        </div>
+                                        <div class="col-10 item_info_container">
+                                            <div class="item_title">{{dog.name}}</div>
+                                            <div class="item_subtitle">{{dog.breed}}</div>
+                                        </div>
+                                        <div class="col-1 icon_container">
+                                            <i class=" bi bi-arrow-right"></i>
+                                        </div>
+                                    </li>
+                                  </ul>
+                            </div>
+                        }
+                    }
+
                 }
             </div>
         </div>

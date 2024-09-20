@@ -1,6 +1,9 @@
 .row:hover{
     cursor: pointer;
 }
+.photo-placeholder{
+    z-index:0;
+}
 
 #profilePhotoContainer{
     
@@ -11,6 +14,10 @@
         object-fit: cover;
         border-radius: 15px;
     }
+}
+
+.dogInfo-placeholder{
+    z-index: 2;
 }
 #dogInfo{
     margin-top: -5vh;

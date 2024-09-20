@@ -9,6 +9,9 @@ import { jwtDecode } from 'jwt-decode';
   styleUrl: './followed-users-dogs.component.scss'
 })
 export class FollowedUsersDogsComponent {
+
+  loading: boolean = true
+
   dogs: any[] = []
   counter: number = 0
   dogService = inject(DogsService)
@@ -20,7 +23,7 @@ export class FollowedUsersDogsComponent {
 
   async getDogs() {
 
-
+    this.loading = true
     // this.dogService.getDogs().then(res => {
     //   this.dogs = res
     // }) 
@@ -28,15 +31,20 @@ export class FollowedUsersDogsComponent {
 
     const payload:any = jwtDecode(localStorage.getItem("user_token")!)
     await this.followService.getFolloweds(payload._id).then(async followeds => {
-
       console.log(followeds);
-      for(let followed of followeds){
+      if(followeds.length == 0) {
+        this.loading = false
+      }else {
+        for(let followed of followeds){
         
-        this.dogService.getDogs(`idOwner=${followed.followedId}`).then(dogs => {
-
-          this.dogs.push(...dogs)
-
-        })
+          this.dogService.getDogs(`idOwner=${followed.followedId}`).then(dogs => {
+  
+            this.dogs.push(...dogs)
+  
+          }).then(() => {
+            this.loading = false
+          })
+        }
       }
     })
   }

@@ -235,3 +235,20 @@
 #submit{
     border-radius: 25px;
 }
+
+.container-loading{
+    position: absolute;
+    top: 35vh;
+    left: 45%;
+    width: 25%;
+    height: 15vh;
+    z-index: 3;
+    border-radius: 25px;
+    .loading-container{
+        display: flex;
+        height: 15vh;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+    }
+}

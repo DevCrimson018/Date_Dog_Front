@@ -1,28 +1,28 @@
 <div class="container mt-5">
-    <div class="row d-flex justify-content-center " id="user_info">
+    <div class="row d-flex justify-content-center " id="user_info"  [class]="loading == true ? 'placeholder-glow' : ''">
         <div class="col-sm-12 col-md-10 col-lg-8 pt-5 mt-md-3 mt-sm-0 d-flex justify-content-between bg-light">
             <div class="col-3 follow" id="followed">
-                <h2>{{followeds.length}}</h2>
-                <small>Siguiendo</small>
+                <h2 [class]="loading == true ? 'placeholder' : ''">{{followeds.length}}</h2>
+                <small [class]="loading == true ? 'placeholder' : ''">Siguiendo</small>
             </div>
             <div class="col-4" id="profile_container">
-                <img [src]="user.imgUrl || '../../../../assets/images/NoProfilePhoto.png'" alt="">
+                <img [class]="loading == true ? 'placeholder' : ''" [src]="user.imgUrl || '../../../../assets/images/NoProfilePhoto.png'" alt="">
             </div>
-            <div class="col-3 follow" id="followers">
-                <h2>{{followers.length}}</h2>
-                <small>Seguidores</small>
+            <div class="col-3 follow"  id="followers">
+                <h2 [class]="loading == true ? 'placeholder' : ''">{{followers.length}}</h2>
+                <small [class]="loading == true ? 'placeholder' : ''">Seguidores</small>
             </div>
         </div>
     </div>
     <div class="row d-flex justify-content-center" id="name">
         <div class="col-sm-12 col-md-10 col-lg-8 bg-light pb-5 pt-3">
-            <h2>{{user.firstName}}</h2>
-            <small>{{user.username}}</small>
+            <h2 [class]="loading == true ? 'placeholder' : ''">{{user.firstName}}</h2>
+            <small [class]="loading == true ? 'placeholder' : ''">{{user.username}}</small>
         </div>
     </div>
-    <div *ngIf="sameUser == false " class="row d-flex justify-content-center" id="set_follow" >
-        <div (click)="followUnfollow()" class="col-sm-12 col-md-10 col-lg-8 bg-light pb-5 pt-1 d-flex justify-content-center" >
-            <i [class]=" following ? 'bi bi-person-fill' : 'bi bi-person'" style="color:blue"></i>
+    <div *ngIf="loading == false && sameUser == false " class="row d-flex justify-content-center" id="set_follow" >
+        <div  class="col-sm-12 col-md-10 col-lg-8 bg-light pb-5 pt-1 d-flex justify-content-center" >
+            <i [class]=" following ? 'bi bi-person-fill' : 'bi bi-person'" (click)="followUnfollow()" style="color:blue"></i>
         </div>
     </div>
 
@@ -38,40 +38,103 @@
     </div>
 
     @if (show == "dogs") {
-        <div *ngFor="let dog of dogs" class="row d-flex justify-content-center " id="dogs" [routerLink]="'/dogs/dog_details/' + dog._id">
-            <div class="col-sm-12 col-md-10 col-lg-8 mt-3 d-flex justify-content-between bg-light  dogs_container" id="">
-                <div class="col-3   dog_photo_container" >
-                    <img [src]="dog.profilePhoto || '../../../../assets/images/NoProfilePhoto.png'" alt="">
-                </div>
-                <div class="col-5 dog_info">
-                    <h2>{{dog.name}}</h2>
-                    <small>{{dog.breed}}</small>
-                </div>
-                <div class="col-4 age_sex">
-                    <div class="age">
-                        {{dog.dob | date: 'MM-yyyy'}}
+
+        @if (loading == true) {
+            <div *ngFor="let dog of [1,1,1]" class="row d-flex justify-content-center placeholder-glow" id="dogs">
+                <div class="col-sm-12 col-md-10 col-lg-8 mt-3 d-flex justify-content-between bg-light  dogs_container" id="">
+                    <div class="col-3   dog_photo_container" >
+                        <img class="placeholder" src="../../../../assets/images/NoProfilePhoto.png" alt="">
                     </div>
-                    <div class="sex">
-                        {{dog.sex}}
+                    <div class="col-5 dog_info">
+                        <h2 class="placeholder"></h2>
+                        <small class="placeholder"></small>
+                    </div>
+                    <div class="col-4 age_sex">
+                        <div class="age placeholder" >
+                            
+                        </div>
+                        <div class="sex placeholder">
+                            
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }@else{
+            @if (dogs.length == 0) {
+                <div class="row d-flex justify-content-center mt-5" id="no-dogs" routerLink="/dogs/add_dog">
+                    <div class="col-8">
+                        <div class="card">
+                            <img class="card-img-top" src="../../../../assets/images/Dog2Photo.png" alt="Title" />
+                            <div class="card-body">
+                                <h4 class="card-title">Aun no hay Perros</h4>
+                                <p class="card-text">Este usuario aun no tiene perros</p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            }@else {
+                <div *ngFor="let dog of dogs" class="row d-flex justify-content-center " id="dogs" [routerLink]="'/dogs/dog_details/' + dog._id">
+                    <div class="col-sm-12 col-md-10 col-lg-8 mt-3 d-flex justify-content-between bg-light  dogs_container" id="">
+                        <div class="col-3   dog_photo_container" >
+                            <img [src]="dog.profilePhoto || '../../../../assets/images/NoProfilePhoto.png'" alt="">
+                        </div>
+                        <div class="col-5 dog_info">
+                            <h2>{{dog.name}}</h2>
+                            <small>{{dog.breed}}</small>
+                        </div>
+                        <div class="col-4 age_sex">
+                            <div class="age">
+                                {{dog.dob | date: 'MM-yyyy'}}
+                            </div>
+                            <div class="sex">
+                                {{dog.sex}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            
+        }
 
        
     }@else {
-        <div class="row d-flex justify-content-center " id="about_me">
+        <div class="row d-flex justify-content-center " id="about_me" [class]="loading == true ? 'placeholder-glow' : ''">
             <div class="col-sm-12 col-md-10 col-lg-8 mt-3 d-flex justify-content-between bg-light  about_me_container" id="">
                 <div class="col-2   icon_container" >
                     <i class="bi bi-person-circle " style="color: blue;"></i>
                 </div>
                 <div class="col-5 ">
-                    <h2>{{user.firstName}}</h2>
-                    <small>Nombre</small>
+                    <h2 [class]="loading == true ? 'placeholder' : ''"> {{user.firstName}}</h2>
+                    <br *ngIf="loading">
+                    <small [class]="loading == true ? 'placeholder' : ''">Nombre</small>
                 </div>
                 <div class="col-5 ">
-                    <h2>{{user.lastName}}</h2>
-                    <small>Apellido</small>
+                    <h2 [class]="loading == true ? 'placeholder' : ''">{{user.lastName}}</h2>
+                    <br *ngIf="loading">
+                    <small [class]="loading == true ? 'placeholder' : ''">Apellido</small>
+                </div>
+            </div>
+            <div *ngIf="user.address" class="col-sm-12 col-md-10 col-lg-8 mt-3 d-flex justify-content-between bg-light  about_me_container" id="">
+                <div class="col-2   icon_container" >
+                    <i class="bi bi-geo-alt-fill " style="color: red;"></i>
+                </div>
+                <div class="col-4 ">
+                    <h2 [class]="loading == true ? 'placeholder' : ''"> {{user.address.locality}}</h2>
+                    <br *ngIf="loading">
+                    <small [class]="loading == true ? 'placeholder' : ''">Localidad</small>
+                </div>
+                <div class="col-4 ">
+                    <h2 [class]="loading == true ? 'placeholder' : ''">{{user.address.municipality}}</h2>
+                    <br *ngIf="loading">
+                    <small [class]="loading == true ? 'placeholder' : ''">Municipio</small>
+                </div>
+
+                <div class="col-4 ">
+                    <h2 [class]="loading == true ? 'placeholder' : ''">{{user.address.province}}</h2>
+                    <br *ngIf="loading">
+                    <small [class]="loading == true ? 'placeholder' : ''">Provincia</small>
                 </div>
             </div>
             <div class="col-sm-12 col-md-10 col-lg-8 mt-3 d-flex  bg-light  about_me_container" id="">
@@ -79,8 +142,9 @@
                     <i class="bi bi-envelope " style="color: rgba(240, 240, 8, 0.884)"></i>
                 </div>
                 <div class="col-5 ">
-                    <h2>{{user.email}}</h2>
-                    <small>Email</small>
+                    <h2 [class]="loading == true ? 'placeholder' : ''">{{user.email}}</h2>
+                    <br *ngIf="loading">
+                    <small [class]="loading == true ? 'placeholder' : ''">Email</small>
                 </div>
             </div>
             <div *ngIf="user.instagram" class="col-sm-12 col-md-10 col-lg-8 mt-3 d-flex  bg-light  about_me_container" id="">

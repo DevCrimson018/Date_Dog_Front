@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" >
     <div class="row d-flex justify-content-sm-center justify-content-lg-end    ">
         <form [formGroup]="form" (submit)="onSubmit()" class="col-sm-12 col-md-6 col-lg-4 bg-secondary  mt-5 " id="signin_container">
 
@@ -9,25 +9,45 @@
             <div class="col-10 mt-5">
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" formControlName="email" name="email" id="email" aria-describedby="helpId" placeholder="Type Here: "/>
+                    <input  type="email" [readOnly]="loading" class="form-control" formControlName="email" #email name="email" id="email" aria-describedby="helpId" placeholder="Type Here: "/>
                 </div>
             </div>
             <div class="col-10 mb-3">
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" formControlName="password" name="password" id="password" aria-describedby="helpId" placeholder="Type Here: "/>
+                    <input type="password" [readOnly]="loading" class="form-control" formControlName="password" name="password" id="password" aria-describedby="helpId" placeholder="Type Here: " />
                 </div>
             </div>
 
             <div class="col-10 button_group">
-                <button type="submit" class="btn btn-primary col-10">
+                <button type="submit" class="btn btn-primary col-10" [disabled]="loading">
                     Sign In
                 </button>
-                <div class="btn btn-light col-10" routerLink="../signup">
-                    Sign Up
-                </div>
+                @if(loading == true) {
+                    <div class="btn btn-light col-10 disabled" >
+                        Sign Up
+                    </div>
+                }@else {
+                    <div class="btn btn-light col-10"  routerLink="../signup" >
+                        Sign Up
+                    </div>
+                }
                 
             </div>
         </form>
+    </div>
+</div>
+
+<div class="container-loading bg-light" *ngIf="loading">
+    <div class="row">
+        <div class="col-12 loading-container">
+            <h2>Ingresando...</h2>
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="spinner-border text-primary spinner-border-sm" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            
+        </div>
     </div>
 </div>
