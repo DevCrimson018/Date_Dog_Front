@@ -13,6 +13,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class EditDogComponent {
 
+  loading : boolean = false
+
   editingPhotos: boolean = false
   previewProfileUrl: string = ""
 
@@ -53,11 +55,13 @@ export class EditDogComponent {
   }
 
   async onSubmit() {
+    this.loading = true
     const payload: any = jwtDecode(localStorage.getItem("user_token")!)
 
     console.log(this.form.value);
     
     await this.dogService.updateDog(this.id, this.dog).then(async res => {
+      this.loading = false
       console.log(res);
       
     })
@@ -68,12 +72,15 @@ export class EditDogComponent {
   //Vaccines
 
   removeImageVaccine(vaccine: any) {
+    this.loading = true
     this.storage.ref(`dogs/${this.dog._id}/vaccines/${vaccine.photoId}`).listAll().subscribe(res => {
       console.log(res.items[0]);
       res.items[0].delete().then(async () => {
         this.dog.vaccinePhotos = this.dog.vaccinePhotos.filter((vaccineB: any) => vaccineB.photoId !== vaccine.photoId )
         
-         this.dogService.updateDog(this.dog._id, this.dog)
+         this.dogService.updateDog(this.dog._id, this.dog).then(() => {
+          this.loading = false
+         })
       })
       
     })
@@ -84,6 +91,8 @@ export class EditDogComponent {
 
 
   async uploadVaccineImage($event: any) {
+
+    this.loading = true
     
       const file = $event.target.files[0]     
       const code = crypto.getRandomValues(new Uint32Array(20))[0]
@@ -100,6 +109,7 @@ export class EditDogComponent {
             
             await this.dogService.updateDog(this.dog._id, this.dog).then(res => {
               console.log(res);
+              this.loading = false
               
             })
           })
@@ -112,12 +122,16 @@ export class EditDogComponent {
 
 
   removeImage(photo: any) {
+    this.loading = true
+
     this.storage.ref(`dogs/${this.dog._id}/photos/${photo.photoId}`).listAll().subscribe(res => {
       console.log(res.items[0]);
       res.items[0].delete().then(async () => {
         this.dog.photos = this.dog.photos.filter((photoB: any) => photoB.photoId !== photo.photoId )
         
-         this.dogService.updateDog(this.dog._id, this.dog)
+         this.dogService.updateDog(this.dog._id, this.dog).then(() => {
+          this.loading = false
+         })
       })
       
     })
@@ -125,20 +139,24 @@ export class EditDogComponent {
 
   async uploadImage($event: any) {
     
-      const file = $event.target.files[0]
-      const code = crypto.getRandomValues(new Uint32Array(20))[0]
-      await this.storage.upload(`dogs/${this.dog._id}/photos/${code}/photo`,file).then(() => {
-        this.storage.ref(`dogs/${this.dog._id}/photos/${code}`).listAll().subscribe(async res => {
-          await res.items[0].getDownloadURL().then(imgUrl => {
-            let photo = {
-              photoId: code,
-              imgUrl: imgUrl
-            }
-            this.dog.photos.push(photo)
-            this.dogService.updateDog(this.dog._id, this.dog)
+    this.loading = true
+
+    const file = $event.target.files[0]
+    const code = crypto.getRandomValues(new Uint32Array(20))[0]
+    await this.storage.upload(`dogs/${this.dog._id}/photos/${code}/photo`,file).then(() => {
+      this.storage.ref(`dogs/${this.dog._id}/photos/${code}`).listAll().subscribe(async res => {
+        await res.items[0].getDownloadURL().then(imgUrl => {
+          let photo = {
+            photoId: code,
+            imgUrl: imgUrl
+          }
+          this.dog.photos.push(photo)
+          this.dogService.updateDog(this.dog._id, this.dog).then(() => {
+            this.loading = false
           })
         })
       })
+    })
     
   }
 
@@ -147,8 +165,10 @@ export class EditDogComponent {
 
 
   async uploadProfileImage($event: any) {
+    this.loading = true
     await this.storage.upload(`dogs/${this.dog._id}/profilePhoto/profilePhoto`, $event.target.files[0]).then(res => {
       this.previewProfileUrl = URL.createObjectURL($event.target.files[0])
+      this.loading = false
     })
 
   }
