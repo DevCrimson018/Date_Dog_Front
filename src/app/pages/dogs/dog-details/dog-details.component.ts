@@ -10,6 +10,8 @@ import { jwtDecode } from 'jwt-decode';
 })
 export class DogDetailsComponent {
 
+  viewFullImageUrl: string = ""
+
   isOwner: boolean = false
   loading: boolean = true
 
@@ -50,5 +52,9 @@ export class DogDetailsComponent {
     }else {
       this.isOwner = false
     }
+  }
+
+  viewFullImage(imgUrl: string) {
+    this.viewFullImageUrl = imgUrl
   }
 }

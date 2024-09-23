@@ -2,7 +2,7 @@
     <div class="row d-flex justify-content-center" [class]="loading == true ? 'placeholder-glow' : ''">
         <div class="col-sm-12 col-md-10 col-lg-9">
             <div class="row mt-md-4 d-flex">
-                <div class="col-12 p-0" id="profilePhotoContainer">
+                <div class="col-12 p-0" id="profilePhotoContainer" (click)="viewFullImage(dog.profilePhoto)" data-bs-toggle="modal" data-bs-target="#viewImageModal">
                     <img [class]="loading == true ? 'placeholder' : ''" [src]="dog.profilePhoto! || '../../../../assets/images/NoProfilePhoto.png'" alt="">
                 </div>
                 <div class="col-12 bg-light d-flex justify-content-between p-2" id="dogInfo">
@@ -62,7 +62,7 @@
                 </div>
         
                 <div class="col-12" id="vaccine_photos">
-                    <div *ngFor="let vaccine of dog.vaccinePhotos" class="photo_container">
+                    <div *ngFor="let vaccine of dog.vaccinePhotos" class="photo_container" (click)="viewFullImage(vaccine.imgUrl)" data-bs-toggle="modal" data-bs-target="#viewImageModal" >
                         <img [src]="vaccine.imgUrl" alt="">
                     </div>
                     <div *ngIf="dog.vaccinePhotos.length == 0" class="photo_container">
@@ -84,7 +84,7 @@
                 </div>
         
                 <div class="col-12" id="photos_cont">
-                    <div *ngFor="let photo of dog.photos" class="photo_container">
+                    <div *ngFor="let photo of dog.photos" class="photo_container" (click)="viewFullImage(photo.imgUrl)" data-bs-toggle="modal" data-bs-target="#viewImageModal">
                         <img [src]="photo.imgUrl" alt="">
                     </div>
                     <div *ngIf="dog.photos.length == 0" class="photo_container">
@@ -103,3 +103,7 @@
         </div>
     </div>
 </div>
+
+
+
+<app-view-image [imgUrl]="viewFullImageUrl" class="modal fade" id="viewImageModal" tabindex="-1"  data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true"></app-view-image>

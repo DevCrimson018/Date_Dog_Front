@@ -5,7 +5,7 @@
                 <h2 [class]="loading == true ? 'placeholder' : ''">{{followeds.length}}</h2>
                 <small [class]="loading == true ? 'placeholder' : ''">Siguiendo</small>
             </div>
-            <div class="col-4" id="profile_container">
+            <div class="col-4" id="profile_container" (click)="viewFullImage(user.imgUrl)" data-bs-toggle="modal" data-bs-target="#viewImageModal">
                 <img [class]="loading == true ? 'placeholder' : ''" [src]="user.imgUrl || '../../../../assets/images/NoProfilePhoto.png'" alt="">
             </div>
             <div class="col-3 follow"  id="followers">
@@ -22,7 +22,12 @@
     </div>
     <div *ngIf="loading == false && sameUser == false " class="row d-flex justify-content-center" id="set_follow" >
         <div  class="col-sm-12 col-md-10 col-lg-8 bg-light pb-5 pt-1 d-flex justify-content-center" >
-            <i [class]=" following ? 'bi bi-person-fill' : 'bi bi-person'" (click)="followUnfollow()" style="color:blue"></i>
+            @if (followLoading == true) {
+                <i [class]=" following ? 'bi bi-person-fill' : 'bi bi-person'"style="color:blue"></i>
+            }@else {
+                <i [class]=" following ? 'bi bi-person-fill' : 'bi bi-person'" (click)="followUnfollow()" style="color:blue"></i>
+            }
+            
         </div>
     </div>
 
@@ -177,7 +182,21 @@
         </div>
     }
 
+
+    <div class="container-loading bg-light" *ngIf="followLoading">
+        <div class="row">
+            <div class="col-12 loading-container">
+                <h2>Cargando...</h2>
+                <div class="d-flex justify-content-center align-items-center">
+                    <div class="spinner-border text-primary spinner-border-sm" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    
 </div>
 
-
-
+<app-view-image [imgUrl]="viewFullImageUrl" class="modal fade" id="viewImageModal" tabindex="-1"  data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true"></app-view-image>

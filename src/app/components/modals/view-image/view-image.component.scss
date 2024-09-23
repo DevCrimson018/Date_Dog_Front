@@ -1,0 +1,28 @@
+.modal-content{
+    height: 90vh;
+}
+
+.modal-body{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+.photo-container{
+    position: relative;
+    width: 100%;
+    
+    img{
+        position: relative;
+        width: 100%;
+        height: 85vh;
+
+        object-fit: contain;
+        aspect-ratio: 1/1;
+
+    }
+
+}

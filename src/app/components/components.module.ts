@@ -11,6 +11,7 @@ import { FilterLocalitiesPipe } from "../pipes/filter-locations.pipe";
 import { MunicipalitiesModalComponent } from './modals/municipalities-modal/municipalities-modal.component';
 import { ProvincesModalComponent } from './modals/provinces-modal/provinces-modal.component';
 import { BreedsModalComponent } from './modals/breeds-modal/breeds-modal.component';
+import { ViewImageComponent } from './modals/view-image/view-image.component';
 
 
 
@@ -22,7 +23,8 @@ import { BreedsModalComponent } from './modals/breeds-modal/breeds-modal.compone
     LocalitiesModalComponent,
     MunicipalitiesModalComponent,
     ProvincesModalComponent,
-    BreedsModalComponent
+    BreedsModalComponent,
+    ViewImageComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +39,8 @@ import { BreedsModalComponent } from './modals/breeds-modal/breeds-modal.compone
     LocalitiesModalComponent,
     MunicipalitiesModalComponent,
     ProvincesModalComponent,
-    BreedsModalComponent
+    BreedsModalComponent,
+    ViewImageComponent
   ]
 })
 export class ComponentsModule { }

@@ -11,7 +11,11 @@ import { jwtDecode } from 'jwt-decode';
   styleUrl: './user-details.component.scss'
 })
 export class UserDetailsComponent {
+
+  viewFullImageUrl: string = ""
+
   loading:boolean = true
+  followLoading: boolean = false
 
   sameUser: boolean = false
   
@@ -93,6 +97,7 @@ export class UserDetailsComponent {
 
   async followUnfollow() {
     console.log("Follow in progress");
+    this.followLoading = true
     
     const payload: any = jwtDecode(localStorage.getItem("user_token")!)
     
@@ -102,8 +107,11 @@ export class UserDetailsComponent {
       console.log(this.user._id);
       
       
-      await this.followService.deleteFollow(payload._id,this.user._id)
-      this.following = false
+      await this.followService.deleteFollow(payload._id,this.user._id).then(() => {
+        this.following = false
+        this.followLoading = false
+      })
+      
     }else{
       const followInfo = {
         followerId: payload._id,
@@ -116,8 +124,11 @@ export class UserDetailsComponent {
         followedLastName: this.user.lastName,
         followedImgUrl: this.user.imgUrl
       }
-      await this.followService.addFollow(followInfo)
-      this.following = true
+      await this.followService.addFollow(followInfo).then(() => {
+        this.following = true
+        this.followLoading = false
+      })
+      
     }
   }
 
@@ -130,4 +141,7 @@ export class UserDetailsComponent {
     })
   }
 
+  viewFullImage(imgUrl: string) {
+    this.viewFullImageUrl = imgUrl
+  }
 }

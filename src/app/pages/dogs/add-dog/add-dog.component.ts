@@ -48,6 +48,12 @@ export class AddDogComponent {
       
   }
 
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.loadFirstImage()
+  }
+
   async onSubmit() {
 
     this.loading = true
@@ -197,6 +203,7 @@ export class AddDogComponent {
     })
   }
 
+  
 
   checkForm() {
     console.log(this.form.value);

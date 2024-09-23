@@ -49,6 +49,7 @@ export class SearchModalComponent {
   }
 
   searchDogs() {
+    this.loading = true
 
     let query = ""
     
@@ -87,7 +88,7 @@ export class SearchModalComponent {
 
 
     this.dogService.getDogs(query).then(dogs => {
-      this.loading = true
+      
       this.dogs = dogs
       if(this.dogs.length == 0){
         this.dogMessage = "No hay resultados con estos filtros"
